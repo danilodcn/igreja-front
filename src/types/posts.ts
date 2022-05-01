@@ -40,3 +40,11 @@ export interface IPaginationInfo {
   count: number
   pages: number[]
 }
+
+export interface IPostDTO {
+  slug?: string
+  current?: number
+  pageSize?: number
+  categories?: number[]
+  search?: string
+}

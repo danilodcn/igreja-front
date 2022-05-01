@@ -1,19 +1,14 @@
 import client from './http-common'
-import { ICategory, IPost } from '../types/posts'
+import { ICategory, IPost, IPostDTO } from '../types/posts'
 
 export class CategoryService {
   async getAll(): Promise<ICategory[]> {
     const path = 'blog/category/'
-
-    const categories: ICategory[] = await client
-      .get(path)
-      .then((res) => {
-        return res.data['results']
-      })
-      .catch((error: Error) => {
-        console.log(error)
-        return []
-      })
+    console.log(path)
+    const categories: ICategory[] = await client.get(path).then((res) => {
+      console.log(res)
+      return res.data['results']
+    })
     return categories
   }
 }
@@ -30,28 +25,21 @@ export class PostService {
   async getAll(): Promise<IPost[]> {
     return []
   }
-  async get(
-    current: number | undefined,
-    pageSize: number | undefined,
-    categories: number[] | undefined,
-    search: string | undefined = undefined
-  ): Promise<IPost[]> {
-    const _page_size = pageSize ? pageSize : ''
-    const _page = current ? current : 1
-    const _categories = categories ? categories.join(',') : ''
-    const _search = search ? search : ''
-    const path = `${this.path}?page_size=${_page_size}&page=${_page}&categories=${_categories}&search=${_search}`
+  async get(data: IPostDTO): Promise<IPost[]> {
+    const _page_size = data.pageSize ? data.pageSize : ''
+    const _page = data.current ? data.current : 1
+    var _categories = data.categories
+      ? data.categories.join('&categories=')
+      : ''
+    var _categories = _categories ? `&categories=${_categories}` : ''
+    const _search = data.search ? data.search : ''
+    const path = `${this.path}?page_size=${_page_size}&page=${_page}${_categories}&search=${_search}`
+    console.log('meu path', path)
 
-    const posts: IPost[] = await client
-      .get(path)
-      .then((res) => {
-        this.count = res.data['count']
-        return res.data['results']
-      })
-      .catch((error: Error) => {
-        console.log(error)
-        return []
-      })
+    const posts: IPost[] = await client.get(path).then((res) => {
+      this.count = res.data['count']
+      return res.data['results']
+    })
     return posts
   }
   getCategories(posts: IPost[]): ICategory[] {
