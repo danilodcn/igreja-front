@@ -22,9 +22,9 @@
       </v-col>
       <!-- <v-spacer /> -->
     </div>
-    <v-container>
-      <v-row>
-        <v-col cols="12" sm="4" md="3">
+    <v-row class="content">
+      <v-col class="categories-list">
+        <v-container>
           <v-card hidden class="pa-0 py-0">
             <v-card-title color="text_normal">
               <span class="text-h6 secondary-text" align-items="center"
@@ -62,12 +62,16 @@
               </v-list-item-group>
             </v-list>
           </v-card>
-        </v-col>
-        <v-col>
-          <post-card v-for="post in posts" :post="post" :key="post.slug" />
-        </v-col>
-      </v-row>
-    </v-container>
+        </v-container>
+      </v-col>
+      <v-col class="posts-list">
+        <div v-for="post in posts" :key="post.slug" class="post">
+          <v-container class="mx-auto">
+            <post-card :post="post" />
+          </v-container>
+        </div>
+      </v-col>
+    </v-row>
   </div>
 </template>
 
@@ -140,6 +144,7 @@ export default Vue.extend({
 })
 </script>
 <style scoped>
+.container,
 .center {
   margin: auto;
   padding: auto;
@@ -155,5 +160,54 @@ div.search {
 }
 div.search > div {
   max-width: 400px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+}
+
+.posts-list {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+}
+.posts-list div {
+  max-width: 100%;
+}
+
+@media (min-width: 500px) {
+  .posts-list {
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem 0rem;
+  }
+}
+
+@media (min-width: 680px) {
+  .posts-list {
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem 0rem;
+  }
+}
+
+@media (min-width: 960px) {
+  .posts-list {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .content {
+    display: grid;
+    grid-template-columns: 2fr 7fr;
+  }
+}
+@media (min-width: 1264px) {
+  .posts-list {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .content {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+  }
 }
 </style>
