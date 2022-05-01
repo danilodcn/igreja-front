@@ -1,21 +1,17 @@
 <template>
   <div>
-    {{ posts }}
     <v-alert :type="alert.type" dismissible v-model="alert.active">{{
       alert.message
     }}</v-alert>
-    <v-row class="pa-8">
-      <v-spacer />
-      <v-col cols="8" sm="6" md="4" align-content="center">
-        <v-text-field
-          v-model="search"
-          label="Busca"
-          placeholder="Estudo de células"
-          align-content="center"
-          clearable
-        ></v-text-field>
-      </v-col>
-      <v-col cols="2" align-content="center" align="center" class="center">
+    <div class="pa-8 search">
+      <v-text-field
+        v-model="search"
+        label="Buscar"
+        placeholder="Estudo de células"
+        align-content="center"
+        clearable
+      ></v-text-field>
+      <v-col align-content="center" align="center" class="center">
         <v-btn
           color="primary"
           align-content="center"
@@ -24,55 +20,60 @@
           >Pesquisar</v-btn
         >
       </v-col>
-      <v-spacer />
-    </v-row>
-    <v-row>
-      <v-col cols="12" sm="4" md="3">
-        <v-card hidden>
-          <v-card-title color="text_normal">
-            <span class="text-h6 secondary-text" align-items="center"
-              >Categorias</span
-            >
-          </v-card-title>
-          <v-list rounded border-radius="4px">
-            <v-list-item-group v-model="selectedCategories" multiple>
-              <template v-for="(category, i) in categories">
-                <v-divider v-if="!category" :key="`divider-${i}`"></v-divider>
+      <!-- <v-spacer /> -->
+    </div>
+    <v-container>
+      <v-row>
+        <v-col cols="12" sm="4" md="3">
+          <v-card hidden class="pa-0 py-0">
+            <v-card-title color="text_normal">
+              <span class="text-h6 secondary-text" align-items="center"
+                >Categorias</span
+              >
+            </v-card-title>
+            <v-list rounded border-radius="4px">
+              <v-list-item-group v-model="selectedCategories" multiple>
+                <template v-for="(category, i) in categories">
+                  <v-divider v-if="!category" :key="`divider-${i}`"></v-divider>
 
-                <v-list-item
-                  v-else
-                  :key="`item-${i}`"
-                  :value="category.id"
-                  active-class="deep-purple--text text--accent-4"
-                >
-                  <template v-slot:default="{ active }">
-                    <v-list-item-action>
-                      <v-checkbox
-                        :input-value="active"
-                        color="deep-purple accent-4"
-                      ></v-checkbox>
-                    </v-list-item-action>
+                  <v-list-item
+                    v-else
+                    :key="`item-${i}`"
+                    :value="category.id"
+                    active-class="deep-purple--text text--accent-4"
+                  >
+                    <template v-slot:default="{ active }">
+                      <v-list-item-action>
+                        <v-checkbox
+                          :input-value="active"
+                          color="deep-purple accent-4"
+                        ></v-checkbox>
+                      </v-list-item-action>
 
-                    <v-list-item-content>
-                      <v-list-item-title
-                        class="secondary-text"
-                        v-text="category.name"
-                      ></v-list-item-title>
-                    </v-list-item-content>
-                  </template>
-                </v-list-item>
-              </template>
-            </v-list-item-group>
-          </v-list>
-        </v-card>
-      </v-col>
-      <v-col> </v-col>
-    </v-row>
+                      <v-list-item-content>
+                        <v-list-item-title
+                          class="secondary-text"
+                          v-text="category.name"
+                        ></v-list-item-title>
+                      </v-list-item-content>
+                    </template>
+                  </v-list-item>
+                </template>
+              </v-list-item-group>
+            </v-list>
+          </v-card>
+        </v-col>
+        <v-col>
+          <post-card v-for="post in posts" :post="post" :key="post.slug" />
+        </v-col>
+      </v-row>
+    </v-container>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
+import PostCard from '../components/shared/PostCard.vue'
 import { ICategory, IPaginationInfo, IPost, IPostDTO } from '../types/posts'
 import { CategoryService, PostService } from '../services/postsService'
 
@@ -96,6 +97,9 @@ const alert: IAlert = {
 
 export default Vue.extend({
   name: 'ContentPage',
+  components: {
+    PostCard,
+  },
   data() {
     return {
       search: '',
@@ -142,5 +146,14 @@ export default Vue.extend({
 }
 .category {
   color: var(--text);
+}
+div.search {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+div.search > div {
+  max-width: 400px;
 }
 </style>
