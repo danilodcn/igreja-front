@@ -45,7 +45,7 @@ export default {
 </script>
 <style scoped>
 footer {
-    margin-top: auto;
-    display: flex;
+  margin-top: auto;
+  display: flex;
 }
 </style>

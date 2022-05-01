@@ -4,7 +4,7 @@
       <v-container class="main">
         <header-nav />
         <Nuxt />
-        <div class="space"/>
+        <div class="space" />
         <footer-nav />
       </v-container>
     </v-main>
