@@ -23,29 +23,25 @@
     </v-toolbar-items>
 
     <!-- <div class="hidden-md-and-up pa-0"> -->
-      <v-menu bottom left>
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn icon v-bind="attrs" v-on="on">
-            <v-icon class="hidden-md-and-up">mdi-menu</v-icon>
-            <v-icon class="hidden-sm-and-down">mdi-account-circle</v-icon>
-          </v-btn>
-        </template>
+    <v-menu bottom left>
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn icon v-bind="attrs" v-on="on">
+          <v-icon class="hidden-md-and-up">mdi-menu</v-icon>
+          <v-icon class="hidden-sm-and-down">mdi-account-circle</v-icon>
+        </v-btn>
+      </template>
 
-        <v-list>
-          <UserLogo :user="user"/>
-          <v-spacer />
+      <v-list>
+        <UserLogo :user="user" />
+        <v-spacer />
 
-          <v-col class="hidden-md-and-up">
-            <v-list-item
-              v-for="(item, i) in items.items"
-              :key="i"
-              :to="item.to"
-            >
-              <v-list-item-title>{{ item.title }}</v-list-item-title>
-            </v-list-item>
-          </v-col>
-        </v-list>
-      </v-menu>
+        <v-col class="hidden-md-and-up">
+          <v-list-item v-for="(item, i) in items.items" :key="i" :to="item.to">
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item>
+        </v-col>
+      </v-list>
+    </v-menu>
     <!-- </div> -->
   </v-toolbar>
 </template>

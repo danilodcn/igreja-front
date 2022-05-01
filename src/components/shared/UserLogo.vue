@@ -17,10 +17,10 @@
       <v-spacer />
 
       <v-list-item>
-          <v-col v-if="user" class="center">
-            <v-btn to="/logout">Logout</v-btn>
-            <v-btn to="/profile">Perfil</v-btn>
-          </v-col>
+        <v-col v-if="user" class="center">
+          <v-btn to="/logout">Logout</v-btn>
+          <v-btn to="/profile">Perfil</v-btn>
+        </v-col>
         <v-col>
           <v-btn v-if="!user" to="/login">login</v-btn>
         </v-col>
@@ -68,6 +68,6 @@ header {
   flex-direction: column;
   margin: 0 auto;
   padding: 0 auto;
-  gap: .4rem
+  gap: 0.4rem;
 }
 </style>
