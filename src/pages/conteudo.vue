@@ -89,7 +89,7 @@ interface IAlert {
 
 const pages: IPaginationInfo = {
   current: 0,
-  pageSize: 6,
+  pageSize: 3,
   maxPage: 0,
   count: 0,
   pages: [],

@@ -6,6 +6,13 @@
     <v-card-text>
       {{ post.resume }}
     </v-card-text>
+    <v-divider class="mx-2"></v-divider>
+    <div>
+      <div class="date">
+        <v-icon color="primary">mdi-calendar</v-icon>
+        <p>{{ getDate(post.publish_date )}}</p>
+      </div>
+    </div>
   </v-card>
 </template>
 
@@ -21,6 +28,21 @@ export default Vue.extend({
       required: true,
     },
   },
+  methods: {
+    getDate(date: string) {
+      const _date = new Date(date)
+      const monName = new Array ("janeiro", "fevereiro", "março", "abril", "Maio", "junho", "agosto", "outubro", "novembro", "dezembro")
+      const day = _date.getDate()
+      const month = monName[_date.getMonth()]
+      const year = _date.getFullYear()
+
+      const hour = _date.getHours()
+      const minutes = _date.getMinutes()
+
+      const _minutes = minutes > 10? minutes : `0${minutes}`
+      return `${day} de ${month} de ${year} às ${hour}:${_minutes}`
+    }
+  }
 })
 </script>
 
@@ -43,4 +65,20 @@ img {
   max-width: 100%;
   border-radius: 10px;
 }
+hr {
+  margin-top: auto;
+  border: solid 1px var(--primary-color);
+  width: 95%;
+}
+.date * {
+  margin: 0;
+}
+.date {
+  display: flex;
+  flex-direction: row;
+  padding: .5rem 0;
+  gap: .2rem;
+  width: 100%;
+}
+
 </style>
