@@ -1,5 +1,5 @@
 <template>
-  <v-card outlined class="post-content" :to="'/conteudo/' + post.slug">
+  <v-card outlined class="post-content" :to="'/post/' + post.slug">
     <img :src="post.image" :alt="post.title" />
     <v-card-title>{{ post.title }}</v-card-title>
     <v-divider class="mx-2"></v-divider>
