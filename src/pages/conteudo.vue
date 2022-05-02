@@ -3,25 +3,26 @@
     <v-alert :type="alert.type" dismissible v-model="alert.active">{{
       alert.message
     }}</v-alert>
-    <div class="pa-8 search">
-      <v-text-field
-        v-model="search"
-        label="Buscar"
-        placeholder="Estudo de células"
-        align-content="center"
-        clearable
-      ></v-text-field>
-      <v-col align-content="center" align="center" class="center">
+    <v-col sm="9" md="6" class="pa-10 mx-auto">
+      <v-row align-content="center" align="center" class="center">
+        <v-text-field
+          v-model="search"
+          label="Buscar"
+          placeholder="Estudo de células"
+          align-content="center"
+          clearable
+          class="mx-5"
+        ></v-text-field>
         <v-btn
           color="primary"
           align-content="center"
-          class="center"
+          class="mx-auto"
           @click="getCategories()"
           >Pesquisar</v-btn
         >
-      </v-col>
-      <!-- <v-spacer /> -->
-    </div>
+      </v-row>
+    </v-col>
+
     <v-row class="content">
       <v-col class="categories-list">
         <v-container>
@@ -30,6 +31,8 @@
               <span class="text-h6 secondary-text" align-items="center"
                 >Categorias</span
               >
+              <v-spacer />
+              <v-btn color="primary" @click="handleFilter()"> Filtrar </v-btn>
             </v-card-title>
             <v-list rounded border-radius="4px">
               <v-list-item-group v-model="selectedCategories" multiple>
@@ -72,6 +75,26 @@
         </div>
       </v-col>
     </v-row>
+    <div class="text-center">
+      <v-container>
+        <v-row justify="center">
+          <v-col cols="8">
+            <v-container class="max-width">
+              <v-row class="my-auto" justify="center">
+                <span class="my-auto">{{ textInPagination }}</span>
+                <v-pagination
+                  v-model="pages.current"
+                  class="my-4"
+                  :length="pages.maxPage"
+                  :total-visible="7"
+                  >Minha</v-pagination
+                >
+              </v-row>
+            </v-container>
+          </v-col>
+        </v-row>
+      </v-container>
+    </div>
   </div>
 </template>
 
@@ -80,6 +103,7 @@ import Vue from 'vue'
 import PostCard from '../components/shared/PostCard.vue'
 import { ICategory, IPaginationInfo, IPost, IPostDTO } from '../types/posts'
 import { CategoryService, PostService } from '../services/postsService'
+import { pageHelper } from '../helpers/pages'
 
 interface IAlert {
   message?: string
@@ -88,7 +112,7 @@ interface IAlert {
 }
 
 const pages: IPaginationInfo = {
-  current: 0,
+  current: 1,
   pageSize: 3,
   maxPage: 0,
   count: 0,
@@ -114,6 +138,13 @@ export default Vue.extend({
       categories: [] as ICategory[],
     }
   },
+  computed: {
+    textInPagination(this: any) {
+      const plural = this.pages.maxPage > 1 ? 's' : ''
+      const text = `${this.pages.current} de ${this.pages.maxPage} página${plural}`
+      return text
+    },
+  },
   methods: {
     async getCategories() {
       try {
@@ -131,15 +162,46 @@ export default Vue.extend({
       const service = new PostService()
       this.posts = await service.get(data)
       this.pages.count = service.count
+
+      const helper = new pageHelper()
+      this.pages = helper.getPagination({
+        current: data.current,
+        pageSize: data.pageSize,
+        count: service.count,
+      })
+    },
+    async handleFilter() {
+      const data: IPostDTO = {
+        current: 1,
+        pageSize: this.pages.pageSize,
+        categories: this.selectedCategories,
+      }
+      this.getPosts(data)
+      console.log('Após filtros', this.pages.current)
     },
   },
   beforeMount() {
     const data: IPostDTO = {
-      current: 1,
+      current: this.pages.current,
       pageSize: this.pages.pageSize,
     }
     this.getCategories()
     this.getPosts(data)
+  },
+  created() {
+    this.$watch(
+      () => this.pages.current,
+      () => {
+        const data: IPostDTO = {
+          current: this.pages.current,
+          pageSize: this.pages.pageSize,
+          categories: this.selectedCategories,
+        }
+        // this.getCategories()
+        this.getPosts(data)
+        console.log('mudando de página', this.pages.current)
+      }
+    )
   },
 })
 </script>
@@ -152,7 +214,7 @@ export default Vue.extend({
 .category {
   color: var(--text);
 }
-div.search {
+/* div.search {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -160,7 +222,7 @@ div.search {
 }
 div.search > div {
   max-width: 400px;
-}
+} */
 
 .content {
   display: flex;

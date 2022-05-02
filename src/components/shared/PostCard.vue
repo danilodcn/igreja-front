@@ -10,7 +10,7 @@
     <div>
       <div class="date">
         <v-icon color="primary">mdi-calendar</v-icon>
-        <p>{{ getDate(post.publish_date )}}</p>
+        <p>{{ getDate(post.publish_date) }}</p>
       </div>
     </div>
   </v-card>
@@ -31,7 +31,18 @@ export default Vue.extend({
   methods: {
     getDate(date: string) {
       const _date = new Date(date)
-      const monName = new Array ("janeiro", "fevereiro", "março", "abril", "Maio", "junho", "agosto", "outubro", "novembro", "dezembro")
+      const monName = new Array(
+        'janeiro',
+        'fevereiro',
+        'março',
+        'abril',
+        'Maio',
+        'junho',
+        'agosto',
+        'outubro',
+        'novembro',
+        'dezembro'
+      )
       const day = _date.getDate()
       const month = monName[_date.getMonth()]
       const year = _date.getFullYear()
@@ -39,10 +50,10 @@ export default Vue.extend({
       const hour = _date.getHours()
       const minutes = _date.getMinutes()
 
-      const _minutes = minutes > 10? minutes : `0${minutes}`
+      const _minutes = minutes > 10 ? minutes : `0${minutes}`
       return `${day} de ${month} de ${year} às ${hour}:${_minutes}`
-    }
-  }
+    },
+  },
 })
 </script>
 
@@ -76,9 +87,8 @@ hr {
 .date {
   display: flex;
   flex-direction: row;
-  padding: .5rem 0;
-  gap: .2rem;
+  padding: 0.5rem 0;
+  gap: 0.2rem;
   width: 100%;
 }
-
 </style>
