@@ -1,5 +1,5 @@
 import client from './http-common'
-import { ICategory, IPost, IPostDTO } from '../types/posts'
+import { ICategory, IPost, IPostDTO, IPostDetail } from '../types/posts'
 
 export class CategoryService {
   async getAll(): Promise<ICategory[]> {
@@ -22,8 +22,17 @@ export class PostService {
     this.count = 0
   }
 
-  async getAll(): Promise<IPost[]> {
-    return []
+  async getDetail(slug: string): Promise<IPostDetail> {
+    const path = `${this.path}?slug=${slug ? slug : ''}`
+    console.log('Caminho', path)
+
+    const post: IPostDetail = await client
+      .get(path)
+      .then((res) => res.data)
+      .then((json) => json['results'])
+      .then((list) => list[0])
+
+    return post
   }
   async get(data: IPostDTO): Promise<IPost[]> {
     const _page_size = data.pageSize ? data.pageSize : ''
