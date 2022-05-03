@@ -17,21 +17,36 @@
       </v-card-title>
       <v-card-actions>
         <v-col align="center">
-          <v-btn fab large text color="primary">
+          <v-btn fab large text color="primary" @click="copyCurrentURL()">
             <v-icon>mdi-link-variant</v-icon>
           </v-btn>
           <v-spacer />
-          Copiar
+          <span v-if="!copied"> Copiar </span>
+          <span v-else>Copiado</span>
         </v-col>
         <v-col align="center">
-          <v-btn fab large text color="primary">
+          <v-btn
+            fab
+            large
+            text
+            color="primary"
+            :href="shareFacebook()"
+            target="_blank"
+          >
             <v-icon>mdi-facebook</v-icon>
           </v-btn>
           Facebook
           <v-spacer />
         </v-col>
         <v-col align="center">
-          <v-btn fab large text color="primary">
+          <v-btn
+            fab
+            large
+            text
+            color="primary"
+            :href="shareWhatsApp()"
+            target="_blank"
+          >
             <v-icon text>mdi-whatsapp</v-icon>
           </v-btn>
           WhatsApp
@@ -47,7 +62,57 @@ export default Vue.extend({
   data() {
     return {
       dialog: false,
+      copied: false,
     }
+  },
+  computed: {
+    getShareText(this: any) {
+      if (process.client) {
+        return `${this.getTitle} ${this.getCurrentURL}`
+      }
+      return this.$route.path
+    },
+    getTitle() {
+      if (process.client) {
+        return document.title
+      }
+      return ''
+    },
+    getCurrentURL() {
+      if (process.client) {
+        return window.location.href
+      }
+      return ''
+    },
+  },
+  methods: {
+    async copyUrl() {},
+    shareWhatsApp() {
+      const url = this.encode(this.getShareText)
+      return `whatsapp://send?text=${url}`
+    },
+    encode(text: string) {
+      return encodeURIComponent(text)
+    },
+    shareFacebook() {
+      const url = this.encode(this.getCurrentURL)
+      return `https://www.facebook.com/sharer/sharer.php?u=${url}`
+    },
+    copyCurrentURL() {
+      const clipboardData = navigator.clipboard
+      clipboardData.writeText(this.getCurrentURL)
+      this.copied = true
+    },
+  },
+  created() {
+    this.$watch(
+      () => this.dialog,
+      (value) => {
+        if (!value) {
+          this.copied = false
+        }
+      }
+    )
   },
 })
 </script>
