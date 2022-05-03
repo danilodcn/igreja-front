@@ -22,10 +22,10 @@
             <v-icon>mdi-plus</v-icon>
             Salvar
           </v-btn>
-          <v-btn color="primary" class="mx-2 my-auto" @click="downloadFile()">
+          <share-dialog>
             <v-icon>mdi-share-variant</v-icon>
             Compartilhar
-          </v-btn>
+          </share-dialog>
         </v-row>
       </v-col>
     </v-row>
@@ -41,6 +41,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import ShareDialog from '../../components/shared/ShareDialog.vue'
 import { downloadFile } from '../../helpers/download-file'
 import { PostService } from '../../services/postsService'
 import { IAuthor, IPostDetail } from '../../types/posts'
@@ -51,6 +52,7 @@ export default Vue.extend({
     return {
       slug: this.$route.params.slug,
       post: {} as IPostDetail,
+      shareDialog: false,
     }
   },
   computed: {
@@ -58,6 +60,9 @@ export default Vue.extend({
       const author: IAuthor = this.post ? this.post.author : undefined
       return author.name ? author.name : ' - '
     },
+  },
+  components: {
+    ShareDialog,
   },
   methods: {
     async getPost() {
