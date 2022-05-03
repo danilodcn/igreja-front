@@ -18,11 +18,11 @@
 
       <v-list-item>
         <v-col v-if="user" class="center">
-          <v-btn to="/logout">Logout</v-btn>
-          <v-btn to="/profile">Perfil</v-btn>
+          <v-btn color="primary" text to="/logout">Logout</v-btn>
+          <v-btn color="primary" text to="/profile">Perfil</v-btn>
         </v-col>
-        <v-col>
-          <v-btn v-if="!user" to="/login">login</v-btn>
+        <v-col v-if="!user">
+          <v-btn color="primary" text to="/login">login</v-btn>
         </v-col>
       </v-list-item>
     </v-col>
