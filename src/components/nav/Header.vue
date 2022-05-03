@@ -48,7 +48,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { LoggedUser } from '../../types/user'
+import { ILoggedUser } from '../../types/user'
 import UserLogo from '../shared/UserLogo.vue'
 
 interface NavItem {
@@ -79,13 +79,15 @@ const navItems: NavItems = {
   ],
 }
 
+const user = {
+  // url: 'https://cdn.vuetifyjs.com/images/john.jpg',
+  name: 'John',
+} as ILoggedUser
+
 export default Vue.extend({
   data: () => ({
+    user: undefined,
     items: navItems,
-    user: {
-      // url: 'https://cdn.vuetifyjs.com/images/john.jpg',
-      name: 'John',
-    } as LoggedUser,
     computed: {
       user() {},
     },

@@ -32,7 +32,7 @@
 <script lang="ts">
 import Vue, { PropType } from 'vue'
 
-import { LoggedUser } from '../../types/user'
+import { ILoggedUser } from '../../types/user'
 
 export default Vue.extend({
   computed: {
@@ -43,7 +43,7 @@ export default Vue.extend({
   data: () => ({}),
   props: {
     user: {
-      type: Object as PropType<LoggedUser>,
+      type: Object as PropType<ILoggedUser>,
       required: false,
     },
   },

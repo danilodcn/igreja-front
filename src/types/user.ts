@@ -1,10 +1,13 @@
-export interface LoginUser {
-  username: string
+interface IUserBase {}
+
+export interface ILoggingUser {
+  username?: string
   email: string
   password: string
 }
 
-export interface LoggedUser {
+export interface ILoggedUser {
   name: string
   url?: string
+  token?: string
 }

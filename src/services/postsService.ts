@@ -1,4 +1,4 @@
-import client from './http-common'
+import client from './api'
 import { ICategory, IPost, IPostDTO, IPostDetail } from '../types/posts'
 
 export class CategoryService {
