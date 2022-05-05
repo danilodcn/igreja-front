@@ -1,23 +1,12 @@
-import client from './api'
+import { APIBase } from './api'
 import { ICategory, IPost, IPostDTO, IPostDetail } from '../types/posts'
 
-export class CategoryService {
-  async getAll(): Promise<ICategory[]> {
-    const path = 'blog/category/'
-    console.log(path)
-    const categories: ICategory[] = await client.get(path).then((res) => {
-      console.log(res)
-      return res.data['results']
-    })
-    return categories
-  }
-}
-
-export class PostService {
+export class PostService extends APIBase {
   path: string
   count: number
 
   constructor() {
+    super()
     this.path = 'blog/blog/'
     this.count = 0
   }
@@ -26,7 +15,7 @@ export class PostService {
     const path = `${this.path}?slug=${slug ? slug : ''}`
     console.log('Caminho', path)
 
-    const post: IPostDetail = await client
+    const post: IPostDetail = await this.client
       .get(path)
       .then((res) => res.data)
       .then((json) => json['results'])
@@ -34,7 +23,7 @@ export class PostService {
 
     return post
   }
-  async get(data: IPostDTO): Promise<IPost[]> {
+  async getPosts(data: IPostDTO): Promise<IPost[]> {
     const _page_size = data.pageSize ? data.pageSize : ''
     const _page = data.current ? data.current : 1
     var _categories = data.categories
@@ -45,21 +34,19 @@ export class PostService {
     const path = `${this.path}?page_size=${_page_size}&page=${_page}${_categories}&search=${_search}`
     console.log('meu path', path)
 
-    const posts: IPost[] = await client.get(path).then((res) => {
+    const posts: IPost[] = await this.client.get(path).then((res) => {
       this.count = res.data['count']
       return res.data['results']
     })
     return posts
   }
-  getCategories(posts: IPost[]): ICategory[] {
-    var categories = [] as ICategory[]
-
-    posts.forEach((post) => {
-      categories = categories.concat(...post.categories)
+  async getCategories(): Promise<ICategory[]> {
+    const path = 'blog/category/'
+    console.log(path)
+    const categories: ICategory[] = await this.client.get(path).then((res) => {
+      console.log(res)
+      return res.data['results']
     })
-
-    categories = [...new Set(categories)]
-    categories.sort((a, b) => a.order - b.order)
     return categories
   }
 }

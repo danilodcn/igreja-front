@@ -33,8 +33,8 @@
 </template>
 <script lang="ts">
 import Vue from 'vue'
-import { AuthService } from "../services/auth/user"
-import { ILoggingUser } from "../types/user"
+import { AuthService } from '../services/auth/user'
+import { ILoggingUser } from '../types/user'
 
 interface IFormData {
   isValid: boolean

@@ -1,7 +1,14 @@
 <template>
   <v-container class="max-width">
     <v-spacer class="my-8" />
-    <v-img :src="post.image" :alt="post.title" outlined rounded max-height="400px"> </v-img>
+    <v-img
+      :src="post.image"
+      :alt="post.title"
+      outlined
+      rounded
+      max-height="400px"
+    >
+    </v-img>
     <v-spacer class="my-4" />
     <v-card-text>
       <span class="text-h4">{{ post.title }}</span>

@@ -1,26 +1,28 @@
-import axios, { AxiosInstance } from 'axios'
+import axios, { AxiosInstance, AxiosRequestConfig } from 'axios'
 import { ILoggedUser } from '../types/user'
 
 const base = {
-  baseURL: 'http://localhost:8001/api/',
+  baseURL: 'http://localhost:8080/api/',
   headers: {
     'Content-type': 'application/json',
   },
   timeout: 5 * 1000,
 }
 
-const apiClient: AxiosInstance = axios.create(base)
+export class APIBase {
+  client: AxiosInstance
+  baseUrl: string
 
-export default apiClient
-
-export const authClient = (user: ILoggedUser): AxiosInstance => {
-  const authorization = `Bearer ${user.token}`
-  axios.defaults.headers.common['Authorization'] = authorization
-  return axios.create({
-    baseURL: 'http://localhost:8001/api/',
-    headers: {
-      'Content-type': 'application/json',
-    },
-    timeout: 5 * 1000,
-  })
+  constructor(config: AxiosRequestConfig = {}) {
+    const api_config: AxiosRequestConfig = {
+      ...config,
+      ...base,
+    }
+    this.client = axios.create(api_config)
+    this.baseUrl = config.baseURL
+  }
+  configAuth(token: string) {
+    const authorization = `Bearer ${token}`
+    axios.defaults.headers.common['Authorization'] = authorization
+  }
 }

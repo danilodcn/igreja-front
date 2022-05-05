@@ -102,7 +102,7 @@
 import Vue from 'vue'
 import PostCard from '../components/shared/PostCard.vue'
 import { ICategory, IPaginationInfo, IPost, IPostDTO } from '../types/posts'
-import { CategoryService, PostService } from '../services/postsService'
+import { PostService } from '../services/postsService'
 import { pageHelper } from '../helpers/pages'
 
 interface IAlert {
@@ -113,7 +113,7 @@ interface IAlert {
 
 const pages: IPaginationInfo = {
   current: 1,
-  pageSize: 3,
+  pageSize: 6,
   maxPage: 0,
   count: 0,
   pages: [],
@@ -122,6 +122,8 @@ const pages: IPaginationInfo = {
 const alert: IAlert = {
   active: false,
 }
+
+const postService = new PostService()
 
 export default Vue.extend({
   name: 'ContentPage',
@@ -148,7 +150,7 @@ export default Vue.extend({
   methods: {
     async getCategories() {
       try {
-        this.categories = await new CategoryService().getAll()
+        this.categories = await postService.getCategories()
       } catch (error) {
         console.log(error)
         this.alert = {
@@ -160,7 +162,7 @@ export default Vue.extend({
     },
     async getPosts(data: IPostDTO) {
       const service = new PostService()
-      this.posts = await service.get(data)
+      this.posts = await postService.getPosts(data)
       this.pages.count = service.count
 
       const helper = new pageHelper()
