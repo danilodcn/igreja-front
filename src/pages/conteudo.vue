@@ -104,12 +104,7 @@ import PostCard from '../components/shared/PostCard.vue'
 import { ICategory, IPaginationInfo, IPost, IPostDTO } from '../types/posts'
 import { PostService } from '../services/postsService'
 import { pageHelper } from '../helpers/pages'
-
-interface IAlert {
-  message?: string
-  type?: 'error' | 'info'
-  active: boolean
-}
+import { alertDefault } from '../types/utils'
 
 const pages: IPaginationInfo = {
   current: 1,
@@ -117,10 +112,6 @@ const pages: IPaginationInfo = {
   maxPage: 0,
   count: 0,
   pages: [],
-}
-
-const alert: IAlert = {
-  active: false,
 }
 
 const postService = new PostService()
@@ -133,8 +124,8 @@ export default Vue.extend({
   data() {
     return {
       search: '',
-      alert,
       pages,
+      alert: alertDefault,
       posts: {} as IPost[],
       selectedCategories: [] as number[],
       categories: [] as ICategory[],
