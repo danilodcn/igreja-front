@@ -9,6 +9,7 @@
     "sourceMap": true,
     "jsx": "preserve",
     "noImplicitThis": true,
+    "importHelpers": true,
     "noEmit": true,
     "experimentalDecorators": true,
     "baseUrl": ".",
