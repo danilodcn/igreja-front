@@ -3,6 +3,7 @@
     <v-alert :type="alert.type" dismissible v-model="alert.active">{{
       alert.message
     }}</v-alert>
+    {{ user }}
     <v-container class="mx-auto">
       <v-col
         cols="12"
@@ -50,6 +51,7 @@
               >
                 Entrar
               </v-btn>
+              <v-btn @click="click()"> Click </v-btn>
             </v-col>
           </v-form>
         </v-col>
@@ -62,6 +64,7 @@ import Vue from 'vue'
 import { AuthService } from '../services/auth/user'
 import { ILoggingUser } from '../types/user'
 import { alertDefault } from '../types/utils'
+import { User as UserStore } from '../store/user'
 
 interface IFormData {
   loading: boolean
@@ -98,14 +101,20 @@ export default Vue.extend({
         (v: string) => v?.length >= 6 || 'Senha muito curta',
       ]
     },
+    user() {
+      return this.$store.state.user
+    },
   },
   methods: {
     async handleLogin() {
       this.form.loading = true
+
+      this.$store.state.user.loginUser(this.form.user)
+      console.log(this.user, 'user')
       const service = new AuthService()
       try {
-        const res = await service.getToken(this.form.user)
-        console.log(res)
+        const user = await service.login(this.form.user)
+        console.log(user)
       } catch (error) {
         console.log(error)
         this.alert = {
@@ -115,6 +124,9 @@ export default Vue.extend({
         }
       }
       setInterval(() => (this.form.loading = false), 500)
+    },
+    click() {
+      const service = new AuthService()
     },
   },
 })
