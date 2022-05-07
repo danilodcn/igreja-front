@@ -4,8 +4,14 @@
       <v-col>
         <v-list-item class="avatar">
           <v-avatar color="primary" size="75" v-if="user">
-            <img class="white--text text-h5" :src="user.url" v-if="user.url" />
-            <span class="white--text text-h5" v-else>{{ user.name[0] }}</span>
+            <img
+              class="white--text text-h5"
+              :src="user.image"
+              v-if="user.image"
+            />
+            <span class="white--text text-h5" v-else>{{
+              user.name ? user.name[0] : '?'
+            }}</span>
           </v-avatar>
 
           <v-avatar color="primary" v-else>
@@ -13,16 +19,15 @@
           </v-avatar>
         </v-list-item>
       </v-col>
-
       <v-spacer />
 
       <v-list-item>
         <v-col v-if="user" class="center">
-          <v-btn color="primary" text to="/logout">Logout</v-btn>
-          <v-btn color="primary" text to="/profile">Perfil</v-btn>
+          <v-btn color="primary" text to="/user/logout">Logout</v-btn>
+          <v-btn color="primary" text to="/user/profile">Perfil</v-btn>
         </v-col>
         <v-col v-if="!user">
-          <v-btn color="primary" text to="/login">login</v-btn>
+          <v-btn color="primary" text to="/user/login">login</v-btn>
         </v-col>
       </v-list-item>
     </v-col>

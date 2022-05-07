@@ -3,7 +3,6 @@
     <v-alert :type="alert.type" dismissible v-model="alert.active">{{
       alert.message
     }}</v-alert>
-    {{ getUser }}
     <v-container class="mx-auto">
       <v-col
         cols="12"
@@ -13,7 +12,7 @@
         align="center"
         justify="center"
       >
-        <img src="./../assets/assets/logo-compressed.png" />
+        <img src="./../../assets/assets/logo-compressed.png" />
         <v-spacer />
         <v-col class="mx-0 px-0">
           <v-form v-model="form.isValid">
@@ -60,11 +59,10 @@
 </template>
 <script lang="ts">
 import Vue from 'vue'
-import { AuthService } from '../services/auth/user'
-import { ILoggingUser } from '../types/user'
-import { alertDefault } from '../types/utils'
-import { IRootState, MutationTypes } from '../store'
-import { login } from '../api/users'
+import { ILoggingUser } from '../../types/user'
+import { alertDefault } from '../../types/utils'
+import { IRootState, MutationTypes } from '../../store'
+import { login } from '../../api/users'
 
 interface IFormData {
   loading: boolean
@@ -116,6 +114,7 @@ export default Vue.extend({
       if (user) {
         this.$store.commit(MutationTypes.LOGIN_USER, user)
         console.log(this.$store.state.user, 'meu user')
+        this.saveOnStorage('user', user)
         this.$router.push('/')
       } else
         this.alert = {
@@ -126,7 +125,28 @@ export default Vue.extend({
 
       setInterval(() => (this.form.loading = false), 500)
     },
+
+    async saveOnStorage(key: string, data: any) {
+      if (process.client) {
+        localStorage.setItem(key, data)
+      }
+    },
+    async loadFromStorage(key: string) {
+      return localStorage.getItem(key)
+    },
   },
+  // async beforeMount() {
+  //   const user = await this.loadFromStorage('user')
+  //   console.log(user, "usuário")
+  //   if (user) {
+  //     this.$store.commit(MutationTypes.LOGIN_USER, user)
+  //     this.alert = {
+  //       active: true,
+  //       message: 'Usuário já logado no sistema',
+  //       type: 'warning',
+  //     }
+  //   }
+  // },
 })
 </script>
 

@@ -7,7 +7,8 @@ export interface ILoggingUser {
 }
 
 export interface ILoggedUser {
+  id?: number
   name: string
-  url?: string
+  image?: string
   token?: string
 }

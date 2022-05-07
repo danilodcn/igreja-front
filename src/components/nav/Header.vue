@@ -11,7 +11,8 @@
     </v-toolbar-title>
 
     <v-divider class="mx-4" vertical></v-divider>
-    <span class="text-h6">Igreja Batista Missionária - IMB</span>
+    <span @click="log()" class="text-h6">Igreja Batista Missionária - IMB</span>
+    {{ user }}
 
     <v-spacer></v-spacer>
 
@@ -32,7 +33,7 @@
       </template>
 
       <v-list>
-        <UserLogo :user="user" />
+        <UserLogo :user="getUser" />
         <v-spacer />
 
         <v-col class="hidden-md-and-up">
@@ -49,6 +50,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import { ILoggedUser } from '../../types/user'
+import { IRootState } from '../../store'
 import UserLogo from '../shared/UserLogo.vue'
 
 interface NavItem {
@@ -80,18 +82,35 @@ const navItems: NavItems = {
 }
 
 const user = {
-  // url: 'https://cdn.vuetifyjs.com/images/john.jpg',
+  image: 'https://cdn.vuetifyjs.com/images/john.jpg',
   name: 'John',
 } as ILoggedUser
 
 export default Vue.extend({
   data: () => ({
-    user: undefined,
+    // user: user,
     items: navItems,
-    computed: {
-      user() {},
-    },
   }),
+  computed: {
+    user() {
+      this.$store.state.user
+    },
+    getUser() {
+      const user: ILoggedUser = (this.$store?.state as IRootState).user
+      console.log('meu user', user)
+      if (user.id) {
+        return user
+      } else {
+        return undefined
+      }
+    },
+  },
+  methods: {
+    log() {
+      console.log(this.user)
+      console.log(this.getUser)
+    },
+  },
   components: {
     UserLogo,
   },
