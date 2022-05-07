@@ -3,7 +3,7 @@
     <v-alert :type="alert.type" dismissible v-model="alert.active">{{
       alert.message
     }}</v-alert>
-    {{ user }}
+    {{ getUser }}
     <v-container class="mx-auto">
       <v-col
         cols="12"
@@ -46,12 +46,11 @@
                 :disabled="!form.isValid"
                 color="primary"
                 @click="handleLogin()"
-                @keyup.enter.native="handleLogin()"
                 :loading="form.loading"
               >
                 Entrar
               </v-btn>
-              <v-btn @click="click()"> Click </v-btn>
+              <v-btn @click="handleLogin()"> Click </v-btn>
             </v-col>
           </v-form>
         </v-col>
@@ -64,7 +63,8 @@ import Vue from 'vue'
 import { AuthService } from '../services/auth/user'
 import { ILoggingUser } from '../types/user'
 import { alertDefault } from '../types/utils'
-import { User as UserStore } from '../store/user'
+import { IRootState, MutationTypes } from '../store'
+import { login } from '../api/users'
 
 interface IFormData {
   loading: boolean
@@ -78,8 +78,8 @@ const form: IFormData = {
   isValid: false,
   passwordVisibility: false,
   user: {
-    email: '',
-    password: '',
+    email: 'daconnas.dcn@gmail.com',
+    password: 'Senha@123',
   },
 }
 
@@ -101,32 +101,30 @@ export default Vue.extend({
         (v: string) => v?.length >= 6 || 'Senha muito curta',
       ]
     },
-    user() {
-      return this.$store.state.user
+    getUser() {
+      return (this.$store.state as IRootState).user
     },
   },
   methods: {
     async handleLogin() {
-      this.form.loading = true
-
-      this.$store.state.user.loginUser(this.form.user)
-      console.log(this.user, 'user')
-      const service = new AuthService()
+      var user = undefined
       try {
-        const user = await service.login(this.form.user)
-        console.log(user)
-      } catch (error) {
-        console.log(error)
+        user = await login(this.form.user)
+      } catch {
+        user = undefined
+      }
+      if (user) {
+        this.$store.commit(MutationTypes.LOGIN_USER, user)
+        console.log(this.$store.state.user, 'meu user')
+        this.$router.push('/')
+      } else
         this.alert = {
           active: true,
           message: 'Erro ao fazer login',
           type: 'warning',
         }
-      }
+
       setInterval(() => (this.form.loading = false), 500)
-    },
-    click() {
-      const service = new AuthService()
     },
   },
 })
