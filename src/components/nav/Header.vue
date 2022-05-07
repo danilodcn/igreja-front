@@ -50,7 +50,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import { ILoggedUser } from '../../types/user'
-import { IRootState } from '../../store'
+import { IRootState, MutationTypes } from '../../store'
 import UserLogo from '../shared/UserLogo.vue'
 
 interface NavItem {
@@ -101,7 +101,7 @@ export default Vue.extend({
       if (user.id) {
         return user
       } else {
-        return undefined
+        return null
       }
     },
   },
@@ -113,6 +113,9 @@ export default Vue.extend({
   },
   components: {
     UserLogo,
+  },
+  beforeCreate() {
+    this.$store.commit(MutationTypes.INICIALIZE_STATE)
   },
 })
 </script>

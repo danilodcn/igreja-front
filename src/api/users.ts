@@ -1,5 +1,4 @@
 import { AxiosPromise, AxiosRequestConfig } from 'axios'
-import { url } from 'inspector'
 import { ILoggedUser, ILoggingUser } from '../types/user'
 import request from '../utils/request'
 
@@ -8,33 +7,35 @@ export const getToken = (user: ILoggingUser) =>
     url: 'token/',
     method: 'post',
     data: user,
-  })
+  }).then((res) => res.data.access)
 
-export const getUser = (config: AxiosRequestConfig) =>
-  request({
-    url: 'login/',
-    method: 'post',
-    ...config,
-  })
-
-export const login = async (user: ILoggingUser) => {
-  const token = await getToken(user).then((res) => res.data.access)
-
-  if (!token) return null
-
+export const getUser = (token: string) => {
   const headers = {
     Authorization: `Bearer ${token}`,
   }
-  const logged_user = await getUser({ headers })
+  return request({
+    url: 'login/',
+    method: 'post',
+    headers,
+  })
     .then<ILoggedUser>((res) => {
       console.log(res, 'reposta do getUser')
       return res.data
     })
     .catch((error) => {
       console.log(error)
+      throw new Error('falha na requisição')
     })
+}
+
+export const login = async (user: ILoggingUser) => {
+  const token = await getToken(user)
+  if (!token) return null
+
+  const logged_user = await getUser(token)
   if (!logged_user) return null
 
+  logged_user.token = token
   return logged_user
 }
 

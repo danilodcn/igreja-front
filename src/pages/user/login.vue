@@ -114,7 +114,6 @@ export default Vue.extend({
       if (user) {
         this.$store.commit(MutationTypes.LOGIN_USER, user)
         console.log(this.$store.state.user, 'meu user')
-        this.saveOnStorage('user', user)
         this.$router.push('/')
       } else
         this.alert = {
@@ -124,15 +123,6 @@ export default Vue.extend({
         }
 
       setInterval(() => (this.form.loading = false), 500)
-    },
-
-    async saveOnStorage(key: string, data: any) {
-      if (process.client) {
-        localStorage.setItem(key, data)
-      }
-    },
-    async loadFromStorage(key: string) {
-      return localStorage.getItem(key)
     },
   },
   // async beforeMount() {
