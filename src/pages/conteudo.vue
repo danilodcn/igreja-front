@@ -152,15 +152,14 @@ export default Vue.extend({
       }
     },
     async getPosts(data: IPostDTO) {
-      const service = new PostService()
-      this.posts = await postService.getPosts(data)
-      this.pages.count = service.count
+      const result = await postService.getPosts(data)
+      this.posts = result.posts
 
       const helper = new pageHelper()
       this.pages = helper.getPagination({
         current: data.current,
         pageSize: data.pageSize,
-        count: service.count,
+        count: result.count,
       })
     },
     async handleFilter() {

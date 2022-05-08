@@ -63,7 +63,7 @@ import { ILoggingUser } from '../../types/user'
 import { alertDefault } from '../../types/utils'
 import { IRootState, MutationTypes } from '../../store'
 import { login } from '../../api/users'
-
+import { UserService } from '../../services/user'
 interface IFormData {
   loading: boolean
   passwordVisibility: boolean
@@ -80,6 +80,8 @@ const form: IFormData = {
     password: 'Senha@123',
   },
 }
+
+const userService = new UserService()
 
 export default Vue.extend({
   name: 'LoginPage',
@@ -105,12 +107,17 @@ export default Vue.extend({
   },
   methods: {
     async handleLogin() {
+      this.form.loading = true
+      console.log(new Date())
       var user = undefined
       try {
-        user = await login(this.form.user)
+        await userService.getUser(this.form.user)
+        user = userService.user
       } catch {
+        console.log('error')
         user = undefined
       }
+      console.log('user', user)
       if (user) {
         this.$store.commit(MutationTypes.LOGIN_USER, user)
         console.log(this.$store.state.user, 'meu user')
