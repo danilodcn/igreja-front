@@ -1,5 +1,6 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios'
-import { ILoggedUser } from '../types/user'
+import { url } from 'inspector'
+import { ILoggedUser, ILoggingUser } from '../types/user'
 
 const base = {
   baseURL: 'http://localhost:8080/api/',
@@ -10,8 +11,9 @@ const base = {
 }
 
 export class APIBase {
-  client: AxiosInstance
+  private client: AxiosInstance
   baseUrl: string
+  user: ILoggedUser
 
   constructor(config: AxiosRequestConfig = {}) {
     const api_config: AxiosRequestConfig = {
@@ -20,9 +22,43 @@ export class APIBase {
     }
     this.client = axios.create(api_config)
     this.baseUrl = config.baseURL
+    this.user = {}
   }
-  configAuth(token: string) {
-    const authorization = `Bearer ${token}`
-    axios.defaults.headers.common['Authorization'] = authorization
+
+  async request(config: AxiosRequestConfig, auth: boolean = false) {
+    if (auth) {
+      const headers = { Authorization: `Bearer ${this.user?.token}` }
+      config = { ...config, headers }
+    }
+
+    return await this.client(config)
+      .then((res) => res.data)
+      .catch((error) =>
+        console.log(
+          'Houve um erro na requisição; url=',
+          config.url,
+          '; erro= ',
+          error
+        )
+      )
+  }
+}
+
+export class AuthAPI extends APIBase {
+  async getUser(user: ILoggingUser) {
+    await this.getToken(user)
+    console.log(this.user)
+    const result = await this.request({ url: 'login/', method: 'POST' }, true)
+    console.log(result)
+  }
+
+  async getToken(user: ILoggingUser) {
+    var result = await this.request({
+      url: 'token/',
+      method: 'POST',
+      data: user,
+    })
+    const token = result.access
+    this.user.token = token
   }
 }

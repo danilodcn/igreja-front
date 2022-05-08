@@ -15,15 +15,11 @@ export class PostService extends APIBase {
     const path = `${this.path}?slug=${slug ? slug : ''}`
     console.log('Caminho', path)
 
-    const post: IPostDetail = await this.client
-      .get(path)
-      .then((res) => res.data)
-      .then((json) => json['results'])
-      .then((list) => list[0])
+    const result = await this.request({ url: path, method: 'GET' })
 
-    return post
+    return result?.results[0]
   }
-  async getPosts(data: IPostDTO): Promise<IPost[]> {
+  async getPosts(data: IPostDTO): Promise<{ posts: IPost[]; count: number }> {
     const _page_size = data.pageSize ? data.pageSize : ''
     const _page = data.current ? data.current : 1
     var _categories = data.categories
@@ -34,19 +30,18 @@ export class PostService extends APIBase {
     const path = `${this.path}?page_size=${_page_size}&page=${_page}${_categories}&search=${_search}`
     console.log('meu path', path)
 
-    const posts: IPost[] = await this.client.get(path).then((res) => {
-      this.count = res.data['count']
-      return res.data['results']
-    })
-    return posts
+    const result = await this.request({ url: path, method: 'GET' })
+
+    this.count = result.count
+    const posts: IPost[] = result.results
+    return { posts, count: result.count }
   }
+
   async getCategories(): Promise<ICategory[]> {
     const path = 'blog/category/'
     console.log(path)
-    const categories: ICategory[] = await this.client.get(path).then((res) => {
-      console.log(res)
-      return res.data['results']
-    })
-    return categories
+    const result = await this.request({ url: path, method: 'GET' })
+
+    return result.results
   }
 }

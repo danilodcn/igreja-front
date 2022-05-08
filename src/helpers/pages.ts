@@ -20,14 +20,6 @@ export class pageHelper {
       count,
       pages: [],
     }
-    const BUTTONS_NUMBER = 3
-
-    for (var i = 0; i < BUTTONS_NUMBER; i++) {
-      var currentPage = current + i - 1
-      if (currentPage > 0 && currentPage <= maxPage) {
-        pagination.pages.push(currentPage)
-      }
-    }
 
     return pagination
   }
