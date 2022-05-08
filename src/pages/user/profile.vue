@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-container class="mx-auto">
-      <v-col cols="8" sm="7" md="5" class="mx-auto px-">
+      <v-col cols="11" sm="10" class="mx-auto px-0">
         <v-row cols="12" class="mx-auto" align="center" justify="center">
           <v-avatar size="160">
             <v-img :src="user.image" v-if="user"></v-img>
@@ -12,12 +12,12 @@
         </v-row>
         <v-row align="center" justify="center">
           <v-btn color="primary" text>
-            <span>Alterar</span>
             <v-icon>mdi-account-edit</v-icon>
+            <span>Alterar</span>
           </v-btn>
         </v-row>
 
-        <v-form v-model="form.isValid">
+        <v-form v-model="form.isValid" class="profile-form">
           <v-text-field label="Nome" placeholder="Nome"></v-text-field>
 
           <v-text-field
@@ -51,8 +51,19 @@
 
           <v-text-field label="Cidade" placeholder="Cidade"></v-text-field>
 
-          <v-text-field label="CEP" placeholder="CEP"></v-text-field>
+          <v-text-field
+            label="CEP"
+            placeholder="CEP"
+            return-masked-value
+            mask="###.###.###-##"
+          ></v-text-field>
         </v-form>
+        <v-row align="center" justify="center">
+          <v-btn color="primary" text>
+            <v-icon>mdi-content-save</v-icon>
+            <span>Atualizar</span>
+          </v-btn>
+        </v-row>
       </v-col>
     </v-container>
   </div>
@@ -92,6 +103,17 @@ export default Vue.extend({
 </script>
 
 <style scoped>
-.user-avatar {
+.profile-form {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+}
+
+@media (min-width: 680px) {
+  .profile-form {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 </style>
