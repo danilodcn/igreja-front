@@ -85,6 +85,7 @@
                 <v-pagination
                   v-model="pages.current"
                   class="my-4"
+                  circle
                   :length="pages.maxPage"
                   :total-visible="7"
                   >Minha</v-pagination
