@@ -37,7 +37,7 @@
       </v-col>
     </v-row>
     <v-spacer />
-    <v-col>
+    <v-col class="ma-0 pa-0">
       <v-spacer class="my-4" />
 
       <div v-html="post.content" />
