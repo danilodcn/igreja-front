@@ -3,7 +3,7 @@ import { url } from 'inspector'
 import { ILoggedUser, ILoggingUser } from '../types/user'
 
 const base = {
-  baseURL: 'http://localhost:8080/api/',
+  baseURL: 'https://igreja-ibm.herokuapp.com/api/',
   headers: {
     'Content-type': 'application/json',
   },
