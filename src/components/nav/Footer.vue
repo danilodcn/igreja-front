@@ -5,12 +5,14 @@
         <v-card-text>
           <v-btn
             v-for="icon in icons"
-            :key="icon"
+            :key="icon.name"
             class="mx-4 white--text"
             icon
+            :href="icon.href"
+            target="_black"
           >
             <v-icon size="24px">
-              {{ icon }}
+              {{ icon.name }}
             </v-icon>
           </v-btn>
         </v-card-text>
@@ -36,12 +38,26 @@
   </footer>
 </template>
 
-<script>
-export default {
-  data: () => ({
-    icons: ['mdi-facebook', 'mdi-twitter', 'mdi-linkedin', 'mdi-instagram'],
-  }),
+<script lang="ts">
+import Vue from 'vue'
+
+interface IIcon {
+  name: string
+  href?: string
 }
+
+const icons: IIcon[] = [
+  { name: 'mdi-facebook' },
+  { name: 'mdi-instagram', href: `https://instagram.com/ibm_sede` },
+  { name: 'mdi-twitter' },
+  { name: 'mdi-linkedin' },
+]
+
+export default Vue.extend({
+  data: () => ({
+    icons,
+  }),
+})
 </script>
 <style scoped>
 footer {
