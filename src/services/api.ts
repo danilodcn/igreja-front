@@ -1,9 +1,8 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios'
-import { url } from 'inspector'
 import { ILoggedUser, ILoggingUser } from '../types/user'
 
 const base = {
-  baseURL: 'http://localhost:8080/api/',
+  baseURL: process.env.hostAPI,
   headers: {
     'Content-type': 'application/json',
   },
