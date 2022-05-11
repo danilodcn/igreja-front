@@ -14,11 +14,9 @@
       <span class="text-h4">{{ post.title }}</span>
     </v-card-text>
     <v-row>
-      <v-col cols="6" v-if="post.author">
-        <span>Por {{ getAuthorName }}</span>
-      </v-col>
-      <v-col cols="6">
-        <v-row>
+      <v-col class="author">
+        <span v-if="post.author">Por {{ getAuthorName }}</span>
+        <v-row class="buttons">
           <a :href="post.document" target="black">
             <v-btn color="primary" class="mx-2 my-auto">
               <v-icon>mdi-download</v-icon>
@@ -40,7 +38,7 @@
     <v-col class="ma-0 pa-0">
       <v-spacer class="my-4" />
 
-      <div v-html="post.content" />
+      <div class="content" v-html="post.content" />
       <v-spacer class="my-4" />
     </v-col>
   </v-container>
@@ -92,3 +90,19 @@ export default Vue.extend({
   },
 })
 </script>
+
+<style scoped>
+.buttons {
+  margin: 0px;
+  padding: 0px;
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+}
+.author {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+</style>

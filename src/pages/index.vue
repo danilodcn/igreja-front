@@ -10,7 +10,7 @@
       <v-card-text>
         <v-spacer />
 
-        <span v-html="pageInfo.content" class="text-body-1" />
+        <div v-html="pageInfo.content" class="text-body-1 content" />
 
         <v-spacer class="py-4" />
 
