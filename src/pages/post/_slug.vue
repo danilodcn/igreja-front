@@ -46,13 +46,16 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import ShareDialog from '../../components/shared/ShareDialog.vue'
-import { downloadFile } from '../../helpers/download-file'
-import { PostService } from '../../services/postsService'
-import { IAuthor, IPostDetail } from '../../types/posts'
+import ShareDialog from '@/components/shared/ShareDialog.vue'
+import { downloadFile } from '@/helpers/download-file'
+import { PostService } from '@/services/postsService'
+import { IAuthor, IPostDetail } from '@/types/posts'
 
 export default Vue.extend({
   name: 'PostListPage',
+  components: {
+    ShareDialog,
+  },
   data() {
     return {
       slug: this.$route.params.slug,
@@ -66,8 +69,8 @@ export default Vue.extend({
       return author.name ? author.name : ' - '
     },
   },
-  components: {
-    ShareDialog,
+  beforeMount() {
+    this.getPost()
   },
   methods: {
     async getPost() {
@@ -80,13 +83,10 @@ export default Vue.extend({
         url,
         label: 'documento.pdf',
       }
-      if (url != '') {
+      if (url !== '') {
         downloadFile(data)
       }
     },
-  },
-  beforeMount() {
-    this.getPost()
   },
 })
 </script>

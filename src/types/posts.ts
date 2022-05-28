@@ -15,7 +15,7 @@ export interface IAuthor {
 interface IPostBase {
   author: IAuthor
   image: string
-  publish_date: Date
+  publish_date: string
   resume: string
   slug: string
   subtitle?: string

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-alert :type="alert.type" dismissible v-model="alert.active">{{
+    <v-alert v-model="alert.active" :type="alert.type" dismissible>{{
       alert.message
     }}</v-alert>
     <v-col sm="9" md="6" class="pa-10 mx-auto">
@@ -45,7 +45,7 @@
                     :value="category.id"
                     active-class="deep-purple--text text--accent-4"
                   >
-                    <template v-slot:default="{ active }">
+                    <template #default="{ active }">
                       <v-list-item-action>
                         <v-checkbox
                           :input-value="active"
@@ -101,11 +101,11 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import PostCard from '../components/shared/PostCard.vue'
-import { ICategory, IPaginationInfo, IPost, IPostDTO } from '../types/posts'
-import { PostService } from '../services/postsService'
-import { pageHelper } from '../helpers/pages'
-import { alertDefault } from '../types/utils'
+import PostCard from '@/components/shared/PostCard.vue'
+import { ICategory, IPaginationInfo, IPost, IPostDTO } from '@/types/posts'
+import { PostService } from '@/services/postsService'
+import { PageHelper } from '@/helpers/pages'
+import { alertDefault } from '@/types/utils'
 
 const pages: IPaginationInfo = {
   current: 1,
@@ -139,40 +139,6 @@ export default Vue.extend({
       return text
     },
   },
-  methods: {
-    async getCategories() {
-      try {
-        this.categories = await postService.getCategories()
-      } catch (error) {
-        console.log(error)
-        this.alert = {
-          active: true,
-          message: 'Erro ao carregar as Categorias',
-          type: 'error',
-        }
-      }
-    },
-    async getPosts(data: IPostDTO) {
-      const result = await postService.getPosts(data)
-      this.posts = result.posts
-
-      const helper = new pageHelper()
-      this.pages = helper.getPagination({
-        current: data.current,
-        pageSize: data.pageSize,
-        count: result.count,
-      })
-    },
-    async handleFilter() {
-      const data: IPostDTO = {
-        current: 1,
-        pageSize: this.pages.pageSize,
-        categories: this.selectedCategories,
-      }
-      this.getPosts(data)
-      console.log('Após filtros', this.pages.current)
-    },
-  },
   beforeMount() {
     const data: IPostDTO = {
       current: this.pages.current,
@@ -192,9 +158,40 @@ export default Vue.extend({
         }
         // this.getCategories()
         this.getPosts(data)
-        console.log('mudando de página', this.pages.current)
       }
     )
+  },
+  methods: {
+    async getCategories() {
+      try {
+        this.categories = await postService.getCategories()
+      } catch (error) {
+        this.alert = {
+          active: true,
+          message: 'Erro ao carregar as Categorias',
+          type: 'error',
+        }
+      }
+    },
+    async getPosts(data: IPostDTO) {
+      const result = await postService.getPosts(data)
+      this.posts = result.posts
+
+      const helper = new PageHelper()
+      this.pages = helper.getPagination({
+        current: data.current,
+        pageSize: data.pageSize,
+        count: result.count,
+      })
+    },
+    async handleFilter() {
+      const data: IPostDTO = {
+        current: 1,
+        pageSize: this.pages.pageSize,
+        categories: this.selectedCategories,
+      }
+      await this.getPosts(data)
+    },
   },
 })
 </script>

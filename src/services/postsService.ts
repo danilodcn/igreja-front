@@ -1,5 +1,5 @@
 import { APIBase } from './api'
-import { ICategory, IPost, IPostDTO, IPostDetail } from '../types/posts'
+import { ICategory, IPost, IPostDTO, IPostDetail } from '@/types/posts'
 
 export class PostService extends APIBase {
   path: string
@@ -12,23 +12,20 @@ export class PostService extends APIBase {
   }
 
   async getDetail(slug: string): Promise<IPostDetail> {
-    const path = `${this.path}?slug=${slug ? slug : ''}`
-    console.log('Caminho', path)
-
+    const path = `${this.path}?slug=${slug || ''}`
     const result = await this.request({ url: path, method: 'GET' })
 
     return result?.results[0]
   }
+
   async getPosts(data: IPostDTO): Promise<{ posts: IPost[]; count: number }> {
-    const _page_size = data.pageSize ? data.pageSize : ''
-    const _page = data.current ? data.current : 1
-    var _categories = data.categories
-      ? data.categories.join('&categories=')
-      : ''
-    var _categories = _categories ? `&categories=${_categories}` : ''
+    const pageSize = data.pageSize ? data.pageSize : ''
+    const page = data.current ? data.current : 1
+    let categories = data.categories ? data.categories.join('&categories=') : ''
+    categories = categories ? `&categories=${categories}` : ''
+
     const _search = data.search ? data.search : ''
-    const path = `${this.path}?page_size=${_page_size}&page=${_page}${_categories}&search=${_search}`
-    console.log('meu path', path)
+    const path = `${this.path}?page_size=${pageSize}&page=${page}${categories}&search=${_search}`
 
     const result = await this.request({ url: path, method: 'GET' })
 
@@ -39,7 +36,6 @@ export class PostService extends APIBase {
 
   async getCategories(): Promise<ICategory[]> {
     const path = 'blog/category/'
-    console.log(path)
     const result = await this.request({ url: path, method: 'GET' })
 
     return result.results

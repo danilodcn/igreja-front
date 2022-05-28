@@ -54,6 +54,7 @@ const icons: IIcon[] = [
 ]
 
 export default Vue.extend({
+  name: 'FooterNav',
   data: () => ({
     icons,
   }),

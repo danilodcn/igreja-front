@@ -1,7 +1,7 @@
 <template>
   <v-app light>
     <v-main>
-      <v-container class="main">
+      <v-container fluid class="main">
         <header-nav />
         <Nuxt />
         <div class="space" />
@@ -12,10 +12,14 @@
 </template>
 
 <script lang="ts">
-import HeaderNav from '../components/nav/Header.vue'
-import FooterNav from '../components/nav/Footer.vue'
+import HeaderNav from '@/components/nav/Header.vue'
+import FooterNav from '@/components/nav/Footer.vue'
 export default {
   name: 'DefaultLayout',
+  components: {
+    HeaderNav,
+    FooterNav,
+  },
   data() {
     return {
       clipped: false,
@@ -38,10 +42,6 @@ export default {
       rightDrawer: false,
       title: 'Vuetify.js',
     }
-  },
-  components: {
-    HeaderNav,
-    FooterNav,
   },
 }
 </script>

@@ -4,8 +4,8 @@
       <v-col cols="11" sm="10" class="mx-auto px-0">
         <v-row cols="12" class="mx-auto" align="center" justify="center">
           <v-avatar size="160">
-            <v-img :src="user.image" v-if="user"></v-img>
-            <v-icon size="160" class="mx-0" color="primary" v-else
+            <v-img v-if="user" :src="user.image"></v-img>
+            <v-icon v-else size="160" class="mx-0" color="primary"
               >mdi-account-circle</v-icon
             >
           </v-avatar>
@@ -71,8 +71,8 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { IRootState } from '~/src/store'
-import { ILoggedUser } from '~/src/types/user'
+import { IRootState } from '@/store'
+import { ILoggedUser } from '@/types/user'
 
 const form = {
   fileRules: [
@@ -91,7 +91,6 @@ export default Vue.extend({
   computed: {
     user() {
       const user: ILoggedUser = (this.$store?.state as IRootState).user
-      console.log('meu user', user)
       if (user.id) {
         return user
       } else {

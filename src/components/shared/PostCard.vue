@@ -18,7 +18,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { IPost } from '~/src/types/posts'
+import { IPost } from '@/types/posts'
 
 export default Vue.extend({
   name: 'PostCard',
@@ -31,7 +31,7 @@ export default Vue.extend({
   methods: {
     getDate(date: string) {
       const _date = new Date(date)
-      const monName = new Array(
+      const monName = [
         'janeiro',
         'fevereiro',
         'março',
@@ -41,8 +41,8 @@ export default Vue.extend({
         'agosto',
         'outubro',
         'novembro',
-        'dezembro'
-      )
+        'dezembro',
+      ]
       const day = _date.getDate()
       const month = monName[_date.getMonth()]
       const year = _date.getFullYear()

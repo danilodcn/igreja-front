@@ -1,7 +1,7 @@
 <template>
   <div class="mx-auto">
     <v-card rounded="3">
-      <div class="card" v-bind:class="{ left: side == 'left' }">
+      <div class="card" :class="{ left: side == 'left' }">
         <img class="ma-4" :src="churchBody.image" />
         <div class="content">
           <p class="text-subtitle-1">{{ churchBody.name }}</p>
@@ -15,7 +15,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { IChurchBody } from '../../types/homePage'
+import { IChurchBody } from '@/types/homePage'
 
 export default Vue.extend({
   name: 'ChurchBodyCard',

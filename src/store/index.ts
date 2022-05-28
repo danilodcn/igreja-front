@@ -1,7 +1,5 @@
-import { ILoggedUser, ILoggingUser } from '../types/user'
-import { getUser } from '../api/users'
-
 import { GetterTree, ActionTree, MutationTree } from 'vuex'
+import { ILoggedUser } from '@/types/user'
 
 export const state = () => ({
   user: {} as ILoggedUser,
@@ -22,41 +20,19 @@ export enum MutationTypes {
 export const actions: ActionTree<IRootState, IRootState> = {
   fetchThings({ commit }) {
     const things = this.$axios.$get('/things')
-    console.log(things)
-    commit('CHANGE_NAME', 'Novo nome')
+    commit('CHANGE_NAME', things)
   },
 }
 
 export const mutations: MutationTree<IRootState> = {
-  [MutationTypes.ACCESS_TOKEN]: async (state, token: string) => {
+  [MutationTypes.ACCESS_TOKEN]: (state, token: string) => {
     localStorage.setItem(MutationTypes.ACCESS_TOKEN, token)
     state.user.token = token
   },
-  [MutationTypes.LOGIN_USER]: async (state, user: ILoggedUser) => {
-    console.log('antes', user)
-    console.log('depois', JSON.stringify(user))
+  [MutationTypes.LOGIN_USER]: (state, user: ILoggedUser) => {
     localStorage.setItem(MutationTypes.LOGIN_USER, JSON.stringify(user))
 
     state.user = user
-  },
-  [MutationTypes.INICIALIZE_STATE]: async (state) => {
-    const user = localStorage.getItem(MutationTypes.LOGIN_USER)
-    const token = localStorage.getItem(MutationTypes.ACCESS_TOKEN)
-    if (user) {
-      state.user = JSON.parse(user)
-    }
-    if (token) {
-      state.user.token = token
-    }
-    if (state.user.token) {
-      const _user = await getUser(state.user.token)
-      if (_user) {
-        state.user = _user
-      }
-      console.log('user na mutation', _user)
-    } else {
-      console.log('nao tem token')
-    }
   },
 }
 

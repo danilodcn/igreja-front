@@ -24,6 +24,25 @@ export interface IChurchBody extends HomePageBase {
   member_type: IMemberType
 }
 
+export interface IAddress {
+  address_type: string
+  city: string
+  complement: string
+  country: string
+  id: number
+  neighborhood: string
+  number: string
+  state: string
+  street: string
+  zipcode: string
+}
+
+export interface IChurch extends HomePageBase {
+  address: IAddress
+  is_default: boolean
+  active: boolean
+}
+
 export interface IHomePage extends HomePageBase {
   active: boolean
   body_content: string

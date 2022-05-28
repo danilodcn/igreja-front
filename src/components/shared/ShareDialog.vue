@@ -1,6 +1,6 @@
 <template>
   <v-dialog v-model="dialog" width="350" max-width="350">
-    <template v-slot:activator="{ on, attrs }">
+    <template #activator="{ on, attrs }">
       <v-btn color="primary" v-bind="attrs" v-on="on">
         <slot />
       </v-btn>
@@ -58,7 +58,7 @@
 <script lang="ts">
 import Vue from 'vue'
 export default Vue.extend({
-  name: 'share-dialog',
+  name: 'ShareDialog',
   data() {
     return {
       dialog: false,
@@ -85,6 +85,16 @@ export default Vue.extend({
       return ''
     },
   },
+  created() {
+    this.$watch(
+      () => this.dialog,
+      (value) => {
+        if (!value) {
+          this.copied = false
+        }
+      }
+    )
+  },
   methods: {
     async copyUrl() {},
     shareWhatsApp() {
@@ -103,16 +113,6 @@ export default Vue.extend({
       clipboardData.writeText(this.getCurrentURL)
       this.copied = true
     },
-  },
-  created() {
-    this.$watch(
-      () => this.dialog,
-      (value) => {
-        if (!value) {
-          this.copied = false
-        }
-      }
-    )
   },
 })
 </script>

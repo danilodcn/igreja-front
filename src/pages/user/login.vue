@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-alert :type="alert.type" dismissible v-model="alert.active">{{
+    <v-alert v-model="alert.active" :type="alert.type" dismissible>{{
       alert.message
     }}</v-alert>
     <v-container class="mx-auto">
@@ -12,7 +12,7 @@
         align="center"
         justify="center"
       >
-        <img src="./../../assets/assets/logo-compressed.png" />
+        <img src="@/assets/assets/logo-compressed.png" />
         <v-spacer />
         <v-col class="mx-0 px-0">
           <v-form v-model="form.isValid">
@@ -32,20 +32,20 @@
                 :append-icon="
                   form.passwordVisibility ? 'mdi-eye' : 'mdi-eye-off'
                 "
-                @click:append="
-                  form.passwordVisibility = !form.passwordVisibility
-                "
                 :rules="passwordRules"
                 label="Senha"
                 required
+                @click:append="
+                  form.passwordVisibility = !form.passwordVisibility
+                "
               >
               </v-text-field>
               <v-btn
                 text
                 :disabled="!form.isValid"
                 color="primary"
-                @click="handleLogin()"
                 :loading="form.loading"
+                @click="handleLogin()"
               >
                 Entrar
               </v-btn>
@@ -59,11 +59,10 @@
 </template>
 <script lang="ts">
 import Vue from 'vue'
-import { ILoggingUser } from '../../types/user'
-import { alertDefault } from '../../types/utils'
-import { IRootState, MutationTypes } from '../../store'
-import { login } from '../../api/users'
-import { UserService } from '../../services/user'
+import { ILoggedUser, ILoggingUser } from '@/types/user'
+import { alertDefault } from '@/types/utils'
+import { IRootState, MutationTypes } from '@/store'
+import { UserService } from '@/services/user'
 interface IFormData {
   loading: boolean
   passwordVisibility: boolean
@@ -108,19 +107,15 @@ export default Vue.extend({
   methods: {
     async handleLogin() {
       this.form.loading = true
-      console.log(new Date())
-      var user = undefined
+      let user = {} as ILoggedUser
       try {
         await userService.getUser(this.form.user)
         user = userService.user
       } catch {
-        console.log('error')
         user = undefined
       }
-      console.log('user', user)
       if (user) {
         this.$store.commit(MutationTypes.LOGIN_USER, user)
-        console.log(this.$store.state.user, 'meu user')
         this.$router.push('/')
       } else
         this.alert = {
@@ -132,18 +127,6 @@ export default Vue.extend({
       setInterval(() => (this.form.loading = false), 500)
     },
   },
-  // async beforeMount() {
-  //   const user = await this.loadFromStorage('user')
-  //   console.log(user, "usuário")
-  //   if (user) {
-  //     this.$store.commit(MutationTypes.LOGIN_USER, user)
-  //     this.alert = {
-  //       active: true,
-  //       message: 'Usuário já logado no sistema',
-  //       type: 'warning',
-  //     }
-  //   }
-  // },
 })
 </script>
 

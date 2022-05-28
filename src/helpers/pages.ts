@@ -1,4 +1,4 @@
-import { IPaginationInfo } from '../types/posts'
+import { IPaginationInfo } from '@/types/posts'
 
 interface PageDTO {
   current: number | undefined
@@ -6,7 +6,7 @@ interface PageDTO {
   count: number | undefined
 }
 
-export class pageHelper {
+export class PageHelper {
   getPagination(page: PageDTO): IPaginationInfo {
     const current = page.current ? page.current : 1
     const pageSize = page.pageSize ? page.pageSize : 1

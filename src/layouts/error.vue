@@ -23,11 +23,6 @@ export default Vue.extend({
       default: null,
     },
   },
-  methods: {
-    cal(): string {
-      return this.pageNotFound
-    },
-  },
   data() {
     return {
       pageNotFound: '404 página não encontrada',
@@ -40,6 +35,11 @@ export default Vue.extend({
     return {
       title,
     }
+  },
+  methods: {
+    cal(): string {
+      return this.pageNotFound
+    },
   },
 })
 </script>

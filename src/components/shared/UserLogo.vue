@@ -3,18 +3,18 @@
     <v-col class="center">
       <v-col>
         <v-list-item class="avatar">
-          <v-avatar color="primary" size="75" v-if="user">
+          <v-avatar v-if="user" color="primary" size="75">
             <img
+              v-if="user.image"
               class="white--text text-h5"
               :src="user.image"
-              v-if="user.image"
             />
-            <span class="white--text text-h5" v-else>{{
+            <span v-else class="white--text text-h5">{{
               user.name ? user.name[0] : '?'
             }}</span>
           </v-avatar>
 
-          <v-avatar color="primary" v-else>
+          <v-avatar v-else color="primary">
             <v-icon dark>mdi-account-circle</v-icon>
           </v-avatar>
         </v-list-item>
@@ -37,19 +37,19 @@
 <script lang="ts">
 import Vue, { PropType } from 'vue'
 
-import { ILoggedUser } from '../../types/user'
+import { ILoggedUser } from '@/types/user'
 
 export default Vue.extend({
-  computed: {
-    userLetters(this: any): string {
-      return this.user
-    },
-  },
-  data: () => ({}),
   props: {
     user: {
       type: Object as PropType<ILoggedUser>,
-      required: false,
+      required: true,
+    },
+  },
+  data: () => ({}),
+  computed: {
+    userLetters(this: any): string {
+      return this.user
     },
   },
 })

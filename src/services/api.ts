@@ -1,5 +1,7 @@
+/* eslint no-console: ["error", { allow: ["warn", "error"] }] */
+
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios'
-import { ILoggedUser, ILoggingUser } from '../types/user'
+import { ILoggedUser, ILoggingUser } from '@/types/user'
 
 const base = {
   baseURL: process.env.hostAPI,
@@ -15,13 +17,13 @@ export class APIBase {
   user: ILoggedUser
 
   constructor(config: AxiosRequestConfig = {}) {
-    const api_config: AxiosRequestConfig = {
+    const apiConfig: AxiosRequestConfig = {
       ...config,
       ...base,
     }
-    this.client = axios.create(api_config)
+    this.client = axios.create(apiConfig)
     this.baseUrl = config.baseURL
-    this.user = {}
+    this.user = { email: '' }
   }
 
   async request(config: AxiosRequestConfig, auth: boolean = false) {
@@ -33,7 +35,7 @@ export class APIBase {
     return await this.client(config)
       .then((res) => res.data)
       .catch((error) =>
-        console.log(
+        console.error(
           'Houve um erro na requisição; url=',
           config.url,
           '; erro= ',
@@ -46,13 +48,12 @@ export class APIBase {
 export class AuthAPI extends APIBase {
   async getUser(user: ILoggingUser) {
     await this.getToken(user)
-    console.log(this.user)
     const result = await this.request({ url: 'login/', method: 'POST' }, true)
-    console.log(result)
+    return result
   }
 
   async getToken(user: ILoggingUser) {
-    var result = await this.request({
+    const result = await this.request({
       url: 'token/',
       method: 'POST',
       data: user,

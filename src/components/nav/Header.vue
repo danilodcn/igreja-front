@@ -3,7 +3,7 @@
     <v-toolbar-title>
       <nuxt-link to="/">
         <img
-          src="./../../assets/assets/logo-compressed.png"
+          src="@/assets/assets/logo-compressed.png"
           alt="Logo"
           class="logo"
         />
@@ -11,21 +11,33 @@
     </v-toolbar-title>
 
     <v-divider class="mx-4" vertical></v-divider>
-    <span @click="log()" class="text-h6">Igreja Batista Missionária - IMB</span>
-    {{ user }}
+    <span class="text-h6 white--text">Igreja Batista Missionária - IBM</span>
+    <!-- <v-select
+      v-model="churchSelected"
+      :items="church"
+      item-text="name"
+      item-value="id"
+      label="Igreja"
+      persistent-hint
+      return-object
+      single-line
+    >
+    </v-select> -->
 
     <v-spacer></v-spacer>
 
     <v-toolbar-items class="hidden-sm-and-down">
-      <v-btn :to="item.to" v-for="(item, i) in items.items" text :key="i">
-        {{ item.title }}
+      <v-btn v-for="(item, i) in items.items" :key="i" :to="item.to" text>
+        <span class="white--text">
+          {{ item.title }}
+        </span>
       </v-btn>
       <v-divider vertical></v-divider>
     </v-toolbar-items>
 
     <!-- <div class="hidden-md-and-up pa-0"> -->
     <v-menu bottom left>
-      <template v-slot:activator="{ on, attrs }">
+      <template #activator="{ on, attrs }">
         <v-btn icon v-bind="attrs" v-on="on">
           <v-icon class="hidden-md-and-up">mdi-menu</v-icon>
           <v-icon class="hidden-sm-and-down">mdi-account-circle</v-icon>
@@ -49,9 +61,11 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { ILoggedUser } from '../../types/user'
-import { IRootState, MutationTypes } from '../../store'
-import UserLogo from '../shared/UserLogo.vue'
+import UserLogo from '@/components/shared/UserLogo.vue'
+import { IRootState } from '@/store'
+import { IChurch } from '@/types/homePage'
+import { HomePageService } from '@/services/homePageService'
+import { ILoggedUser } from '@/types/user'
 
 interface NavItem {
   title: string
@@ -81,41 +95,41 @@ const navItems: NavItems = {
   ],
 }
 
-const user = {
-  image: 'https://cdn.vuetifyjs.com/images/john.jpg',
-  name: 'John',
-} as ILoggedUser
+const homePageService = new HomePageService()
 
 export default Vue.extend({
+  name: 'HeaderNav',
+  components: {
+    UserLogo,
+  },
   data: () => ({
-    // user: user,
     items: navItems,
+    church: [] as IChurch[],
+    churchSelected: {} as IChurch,
   }),
   computed: {
-    user() {
-      this.$store.state.user
-    },
     getUser() {
       const user: ILoggedUser = (this.$store?.state as IRootState).user
-      console.log('meu user', user)
       if (user.id) {
         return user
       } else {
         return null
       }
     },
-  },
-  methods: {
-    log() {
-      console.log(this.user)
-      console.log(this.getUser)
+    defaultChurchName() {
+      if (this.churchSelected !== ({} as IChurch) && this.churchSelected.name) {
+        return this.churchSelected.name
+      }
+      return this.church[0].name
     },
   },
-  components: {
-    UserLogo,
+  beforeMount() {
+    this.getChurch()
   },
-  beforeCreate() {
-    this.$store.commit(MutationTypes.INICIALIZE_STATE)
+  methods: {
+    async getChurch() {
+      this.church = await homePageService.getChurchInfo()
+    },
   },
 })
 </script>
