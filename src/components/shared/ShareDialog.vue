@@ -99,7 +99,8 @@ export default Vue.extend({
     async copyUrl() {},
     shareWhatsApp() {
       const url = this.encode(this.getShareText)
-      return `whatsapp://send?text=${url}`
+      const base = "https://web.whatsapp.com/send"
+      return `${base}?text=${url}`
     },
     encode(text: string) {
       return encodeURIComponent(text)
