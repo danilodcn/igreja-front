@@ -30,7 +30,7 @@ export default Vue.extend({
   },
   methods: {
     async getHomePageInfo() {
-      this.pageInfo = await homePageService.getHomePageInfo()
+      this.pageInfo = await homePageService.getHomePageInfo({ type: 0 }) // 0 is index pages
     },
   },
 })

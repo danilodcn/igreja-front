@@ -26,7 +26,7 @@
     <v-row class="content">
       <v-col class="categories-list">
         <v-container>
-          <v-card hidden class="pa-0 py-0">
+          <v-card hidden class="pa-0 py-0" elevation="4">
             <v-card-title color="text_normal">
               <span class="text-h6 secondary-text" align-items="center"
                 >Categorias</span

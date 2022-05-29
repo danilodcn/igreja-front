@@ -1,10 +1,15 @@
 import { APIBase } from './api'
 import { IPage, IChurch } from '@/types/pages'
 
+interface PageInfoDTO {
+  churchId?: string
+  type?: 1 | 0
+}
+
 export class HomePageService extends APIBase {
-  async getHomePageInfo(churchId: string = ''): Promise<IPage> {
+  async getHomePageInfo({ churchId, type }: PageInfoDTO): Promise<IPage> {
     const id = churchId || ''
-    const url = `/config/page/?church_id=${id}`
+    const url = `/config/page/?church_id=${id}&type=${type || ''}`
 
     return await this.request({ url, method: 'GET' }).then((res) => {
       return res[0]
