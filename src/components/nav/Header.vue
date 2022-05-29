@@ -12,18 +12,6 @@
 
     <v-divider class="mx-4" vertical></v-divider>
     <span class="text-h6 white--text">Igreja Batista Missionária - IBM</span>
-    <!-- <v-select
-      v-model="churchSelected"
-      :items="church"
-      item-text="name"
-      item-value="id"
-      label="Igreja"
-      persistent-hint
-      return-object
-      single-line
-    >
-    </v-select> -->
-
     <v-spacer></v-spacer>
 
     <v-toolbar-items class="hidden-sm-and-down">
@@ -35,7 +23,6 @@
       <v-divider vertical></v-divider>
     </v-toolbar-items>
 
-    <!-- <div class="hidden-md-and-up pa-0"> -->
     <v-menu bottom left>
       <template #activator="{ on, attrs }">
         <v-btn icon v-bind="attrs" v-on="on">
@@ -63,7 +50,7 @@
 import Vue from 'vue'
 import UserLogo from '@/components/shared/UserLogo.vue'
 import { IRootState } from '@/store'
-import { IChurch } from '@/types/homePage'
+import { IChurch } from '~/types/pages'
 import { HomePageService } from '@/services/homePageService'
 import { ILoggedUser } from '@/types/user'
 

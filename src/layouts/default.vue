@@ -1,5 +1,5 @@
 <template>
-  <v-app light>
+  <v-app light class="app">
     <v-main>
       <v-container fluid class="main">
         <header-nav />

@@ -1,23 +1,23 @@
-interface HomePageBase {
+interface PageBase {
   id: number
   name: string
 }
 
-export interface IImage extends HomePageBase {
+export interface IImage extends PageBase {
   image: string
 }
 
-export interface IHomeImage {
+export interface IPageImage {
   order: number
-  imagehome: IImage
+  image: IImage
 }
 
-export interface IMemberType extends HomePageBase {
+export interface IMemberType extends PageBase {
   order: number
   description: string
 }
 
-export interface IChurchBody extends HomePageBase {
+export interface IChurchBody extends PageBase {
   order: number
   content: string
   image: string
@@ -37,19 +37,24 @@ export interface IAddress {
   zipcode: string
 }
 
-export interface IChurch extends HomePageBase {
+export interface IChurch extends PageBase {
   address: IAddress
   is_default: boolean
   active: boolean
 }
 
-export interface IHomePage extends HomePageBase {
-  active: boolean
-  body_content: string
-  body_title: string
-  body: IChurchBody[]
+export interface ISection {
+  section: number
+  title: string
   content: string
-  images: IHomeImage[]
+}
+
+export interface IPage extends PageBase {
+  active: boolean
+  body: IChurchBody[]
+  church: IChurch
+  images: IPageImage[]
   maps_frame: string
+  sections: ISection[]
   title: string
 }

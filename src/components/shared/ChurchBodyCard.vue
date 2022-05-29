@@ -2,11 +2,18 @@
   <div class="mx-auto">
     <v-card rounded="3">
       <div class="card" :class="{ left: side == 'left' }">
-        <img class="ma-4" :src="churchBody.image" />
+        <img class="ma-4" :src="member.image" />
         <div class="content">
-          <p class="text-subtitle-1">{{ churchBody.name }}</p>
-          <p class="text-h6">{{ churchBody.member_type.name }}</p>
-          <div class="text-body-1 text" v-html="churchBody.content"></div>
+          <p class="text-subtitle-1">{{ member.name }}</p>
+          <p class="text-h6 center">
+            {{ member.member_type.name }}
+            <info-dialog
+              :text="member.member_type.description"
+              :title="member.member_type.name"
+              ><v-icon size="20">mdi-information</v-icon></info-dialog
+            >
+          </p>
+          <div class="text-body-1 text" v-html="member.content"></div>
         </div>
       </div>
     </v-card>
@@ -14,25 +21,26 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import { IChurchBody } from '@/types/homePage'
+import { Vue, Component, Prop } from 'nuxt-property-decorator'
+import InfoDialog from './InfoDialog.vue'
+import { IChurchBody } from '~/types/pages'
 
-export default Vue.extend({
+@Component({
   name: 'ChurchBodyCard',
-  props: {
-    churchBody: {
-      type: Object as Vue.PropType<IChurchBody>,
-      required: true,
-    },
-    side: {
-      type: String,
-      required: true,
-    },
-  },
+  components: { 'info-dialog': InfoDialog },
 })
+export default class ChurchBodyCard extends Vue {
+  @Prop({ required: true }) member!: IChurchBody
+  @Prop({ required: true }) side!: String
+}
 </script>
 
 <style scoped>
+.center {
+  display: flex;
+  align-items: center;
+}
+
 .content {
   display: flex;
   flex-direction: column;

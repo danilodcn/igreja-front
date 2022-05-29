@@ -2,7 +2,7 @@
   <v-container class="mx-auto px-0">
     <v-card>
       <v-card-title class="mx-auto my-10 text-h4 center">
-        {{ pageInfo.title }}
+        {{ pageTitle }}
       </v-card-title>
 
       <v-card-text>
@@ -20,32 +20,41 @@
           <v-carousel-item
             v-for="(image, index) in pageInfo.images"
             :key="index"
-            :src="image.imagehome.image"
+            :src="image.image.image"
             reverse-transition="fade-transition"
             transition="fade-transition"
           />
         </v-carousel>
-        <v-spacer class="py-4" />
+        <v-spacer class="py-6" />
 
-        <div class="text-body-1 content" v-html="pageInfo.content" />
       </v-card-text>
 
-      <v-spacer class="py-6" />
-
-      <v-card-subtitle class="mx-auto text-h4 center">{{
-        pageInfo.body_title
-      }}</v-card-subtitle>
+      <div
+        v-for="(section, i) in pageInfo.sections"
+        :key="i"
+        class="mx-2 mx-sm-4 mx-md-6 mx-lg-8"
+      >
+        <v-card-subtitle :key="`subtitle-${i}`" class="mx-auto text-h4 center">
+          {{ section.title }}</v-card-subtitle
+        >
+        <v-spacer class="py-2" />
+        <v-card-text
+          :key="`text-${i}`"
+          class="text-justify"
+          v-html="section.content"
+        ></v-card-text>
+        <v-spacer class="py-4" />
+      </div>
 
       <v-card-text>
         <div v-for="(body, index) in pageInfo.body" :key="index">
           <church-body-card
-            :church-body="body"
+            :member="body"
             :side="index % 2 ? 'left' : 'right'"
           />
         </div>
       </v-card-text>
-
-      <v-card-subtitle class="mx-auto text-h4 center"
+      <v-card-subtitle v-if="pageInfo.maps_frame" class="mx-auto text-h4 center"
         >Localização</v-card-subtitle
       >
       <v-spacer class="py-6" />
@@ -61,7 +70,7 @@
 import Vue from 'vue'
 import ChurchBodyCard from '@/components/shared/ChurchBodyCard.vue'
 import { HomePageService } from '@/services/homePageService'
-import { IHomePage } from '@/types/homePage'
+import { IPage } from '~/types/pages'
 
 const homePageService = new HomePageService()
 
@@ -70,8 +79,13 @@ export default Vue.extend({
   components: { ChurchBodyCard },
   data() {
     return {
-      pageInfo: {} as IHomePage,
+      pageInfo: {} as IPage,
     }
+  },
+  computed: {
+    pageTitle(this: any) {
+      return this.pageInfo?.church?.name || ''
+    },
   },
   created() {
     this.getHomePageInfo()

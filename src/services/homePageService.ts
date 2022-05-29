@@ -1,8 +1,8 @@
 import { APIBase } from './api'
-import { IHomePage, IChurch } from '@/types/homePage'
+import { IPage, IChurch } from '@/types/pages'
 
 export class HomePageService extends APIBase {
-  async getHomePageInfo(churchId: string = ''): Promise<IHomePage> {
+  async getHomePageInfo(churchId: string = ''): Promise<IPage> {
     const id = churchId || ''
     const url = `/config/page/?church_id=${id}`
 
