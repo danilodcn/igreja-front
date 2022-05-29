@@ -1,6 +1,6 @@
 <template>
   <div class="mx-auto">
-    <v-card rounded="3">
+    <v-card rounded="3" class="mx-4 mx-md-10" elevation="4">
       <div class="card" :class="{ left: side == 'left' }">
         <img class="ma-4" :src="member.image" />
         <div class="content">
@@ -67,6 +67,7 @@ export default class ChurchBodyCard extends Vue {
 img {
   max-height: 250px;
   height: 250px;
+  border-radius: 0.4rem;
 }
 
 @media (max-width: 960px) {
