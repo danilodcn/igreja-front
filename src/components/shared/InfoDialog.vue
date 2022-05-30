@@ -28,7 +28,7 @@
         </v-col>
       </v-card-actions>
       <v-spacer></v-spacer>
-      <v-card-text v-if="text" class="content content" v-html="text" />
+      <v-card-text v-if="text" class="text-body-1 content" v-html="text" />
     </v-card>
   </v-dialog>
 </template>
@@ -62,7 +62,7 @@ export default class InfoDialog extends Vue {
   display: none; /* Safari and Chrome */
 }
 .content {
-  padding: 5px 50px 25px 50px !important;
+  padding: 5px 30px 25px 30px !important;
   text-align: justify;
   text-indent: 10px;
   margin-top: 5px;

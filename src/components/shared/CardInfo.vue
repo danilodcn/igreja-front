@@ -3,8 +3,8 @@
     <v-card rounded="3" class="mx-4 mx-md-10" elevation="4">
       <div class="card" :class="{ left: side == 'left' }">
         <img class="ma-4" :src="src" />
-        <div class="content">
-          <p class="text-subtitle-1">{{ title }}</p>
+        <div class="content my-8">
+          <p class="text-body-1">{{ title }}</p>
           <p class="text-h6 center">
             {{ subtitle }}
             <info-dialog
