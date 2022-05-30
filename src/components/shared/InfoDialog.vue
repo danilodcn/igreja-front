@@ -13,11 +13,11 @@
         <slot />
       </v-btn>
     </template>
-    <v-card class="body">
-      <v-card-title class="text-subtitle-1">
+    <v-card class="body d-flex flex-column">
+      <v-card-actions class="text-subtitle-1">
         <v-col>
-          <v-row>
-            <p class="title">
+          <v-row align="center">
+            <p class="title my-auto">
               {{ title }}
             </p>
             <v-spacer></v-spacer>
@@ -26,8 +26,9 @@
             </v-btn>
           </v-row>
         </v-col>
-      </v-card-title>
-      <v-card-text v-if="text" class="text-body-1" v-text="text" />
+      </v-card-actions>
+      <v-spacer></v-spacer>
+      <v-card-text v-if="text" class="text-body-1" v-html="text" />
     </v-card>
   </v-dialog>
 </template>
@@ -64,8 +65,8 @@ export default class InfoDialog extends Vue {
   padding: 5px 50px 25px 50px !important;
   text-align: justify;
   text-indent: 10px;
-  margin-top: 20px;
-  max-height: 300px;
+  margin-top: 5px;
+  max-height: 240px;
   overflow: scroll;
 }
 </style>

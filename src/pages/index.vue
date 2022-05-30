@@ -6,9 +6,9 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import PageCard from '~/components/PageCard.vue'
+import PageCard from '@/components/PageCard.vue'
 import { HomePageService } from '@/services/homePageService'
-import { IPage } from '~/types/pages'
+import { IPage } from '@/types/pages'
 
 const homePageService = new HomePageService()
 
@@ -20,30 +20,13 @@ export default Vue.extend({
       pageInfo: {} as IPage,
     }
   },
-  computed: {
-    pageTitle(this: any) {
-      return this.pageInfo?.church?.name || ''
-    },
-  },
   created() {
     this.getHomePageInfo()
   },
   methods: {
     async getHomePageInfo() {
-      this.pageInfo = await homePageService.getHomePageInfo({ type: 0 }) // 0 is index pages
+      this.pageInfo = await homePageService.getHomePageInfo({ type: 1 }) // 1 is index pages
     },
   },
 })
 </script>
-
-<style scoped>
-.center {
-  display: flex;
-  justify-content: center;
-  text-align: center;
-}
-
-.localization {
-  height: 100%;
-}
-</style>

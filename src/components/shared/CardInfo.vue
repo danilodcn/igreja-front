@@ -2,18 +2,18 @@
   <div class="mx-auto">
     <v-card rounded="3" class="mx-4 mx-md-10" elevation="4">
       <div class="card" :class="{ left: side == 'left' }">
-        <img class="ma-4" :src="member.image" />
+        <img class="ma-4" :src="src" />
         <div class="content">
-          <p class="text-subtitle-1">{{ member.name }}</p>
+          <p class="text-subtitle-1">{{ title }}</p>
           <p class="text-h6 center">
-            {{ member.member_type.name }}
+            {{ subtitle }}
             <info-dialog
-              :text="member.member_type.description"
-              :title="member.member_type.name"
+              :text="description"
+              :title="subtitle"
               ><v-icon size="20">mdi-information</v-icon></info-dialog
             >
           </p>
-          <div class="text-body-1 text" v-html="member.content"></div>
+          <div class="text-body-1 text" v-html="content"></div>
         </div>
       </div>
     </v-card>
@@ -23,14 +23,18 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'nuxt-property-decorator'
 import InfoDialog from './InfoDialog.vue'
-import { IChurchBody } from '~/types/pages'
 
 @Component({
   name: 'ChurchBodyCard',
   components: { 'info-dialog': InfoDialog },
 })
 export default class ChurchBodyCard extends Vue {
-  @Prop({ required: true }) member!: IChurchBody
+  @Prop({required: true}) src!: string
+  @Prop({required: true}) title!: string
+  @Prop({required: true}) subtitle!: string
+  @Prop({required: true}) description!: string
+  @Prop({required: true}) content!: string
+
   @Prop({ required: true }) side!: String
 }
 </script>

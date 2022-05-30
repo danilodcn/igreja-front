@@ -17,11 +17,27 @@ export interface IMemberType extends PageBase {
   description: string
 }
 
+export interface IChurchMinistry extends PageBase {
+  description: string
+}
+
 export interface IChurchBody extends PageBase {
   order: number
   content: string
   image: string
   member_type: IMemberType
+}
+
+export interface IMinistry extends PageBase {
+  ministry: IChurchMinistry
+  leader: number
+}
+
+export interface IMinistrySection extends PageBase {
+  ministry: IMinistry
+  image: string
+  order: number
+  content: string
 }
 
 export interface IAddress {
@@ -52,6 +68,7 @@ export interface ISection {
 export interface IPage extends PageBase {
   active: boolean
   body: IChurchBody[]
+  ministry: IMinistrySection[]
   church: IChurch
   images: IPageImage[]
   maps_frame: string

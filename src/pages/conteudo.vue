@@ -32,7 +32,9 @@
                 >Categorias</span
               >
               <v-spacer />
-              <v-btn color="primary" @click="handleFilter()"> Filtrar </v-btn>
+              <v-btn color="primary" elevation="1" @click="handleFilter()">
+                Filtrar
+              </v-btn>
             </v-card-title>
             <v-list rounded border-radius="4px">
               <v-list-item-group v-model="selectedCategories" multiple>

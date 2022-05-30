@@ -3,7 +3,7 @@ import { IPage, IChurch } from '@/types/pages'
 
 interface PageInfoDTO {
   churchId?: string
-  type?: 1 | 0
+  type?: 1 | 2
 }
 
 export class HomePageService extends APIBase {

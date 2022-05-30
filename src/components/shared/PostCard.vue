@@ -5,16 +5,16 @@
     :to="'/post/' + post.slug"
     elevation="4"
   >
-    <img :src="post.image" :alt="post.title" />
-    <v-card-title>{{ post.title }}</v-card-title>
+    <v-img class="pa-1" :src="post.image" :alt="post.title" width="100%" aspect-ratio="1.2" contain/>
+    <v-card-title class="text-center text-h6 lighten-2">{{ post.title }}</v-card-title>
     <v-divider class="mx-2"></v-divider>
-    <v-card-text>
+    <v-card-text class="text-justify text-body-2">
       {{ post.resume }}
     </v-card-text>
     <v-divider class="mx-2"></v-divider>
     <div>
       <div class="date">
-        <v-icon color="primary">mdi-calendar</v-icon>
+        <v-icon color="primary" class="pr-2">mdi-calendar</v-icon>
         <p>{{ getDate(post.publish_date) }}</p>
       </div>
     </div>
@@ -79,7 +79,7 @@ export default Vue.extend({
 }
 img {
   max-width: 100%;
-  border-radius: 10px;
+  /* border-radius: 10px; */
 }
 hr {
   margin-top: auto;
