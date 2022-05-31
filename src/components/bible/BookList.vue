@@ -20,8 +20,7 @@ const bibleState = namespace('bible')
 
 @Component({
   name: 'BookList',
-  components: {
-  },
+  components: {},
 })
 export default class BookList extends Vue {
   @bibleState.State((state: IBibleState) => state.bible.books) books

@@ -73,9 +73,11 @@
               >
                 <v-icon>mdi-arrow-left-drop-circle</v-icon>
               </v-btn>
-              <span class="mx-auto text-center text-h5">
+
+              <span class="mx-auto text-center text-h4 text-md-h3">
                 {{ chapter.book.name + ' ' + chapter.chapter.number }}
               </span>
+
               <v-btn
                 color="primary"
                 text
@@ -92,7 +94,7 @@
               <v-list-item-group>
                 <v-list-item
                   v-for="verse in chapter.verses"
-                  :key="verse.number"
+                  :key="`${verse.number}-${chapter.book.abbrev}-${chapterNumber}`"
                   color="primary"
                   class="mx-2 my-2"
                   @click="handleSnackbar(verse)"
