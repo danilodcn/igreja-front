@@ -14,7 +14,6 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
 import { namespace } from 'vuex-class'
-import { VBtn } from 'vuetify/lib'
 import { BibleGettersTypes, IBibleState } from '@/store/bible'
 
 const bibleState = namespace('bible')
@@ -22,7 +21,6 @@ const bibleState = namespace('bible')
 @Component({
   name: 'BookList',
   components: {
-    VBtn,
   },
 })
 export default class BookList extends Vue {
