@@ -4,6 +4,7 @@ export default {
   target: 'static',
   env: {
     hostAPI: process.env.API_HOST,
+    tokenAPIBible: process.env.TOKEN_API_BIBLE,
   },
   // Global page headers: https://go.nuxtjs.dev/config-head
   srcDir: 'src/',
@@ -100,5 +101,7 @@ export default {
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {},
+  build: {
+    transpile: 'vuetify/lib',
+  },
 }

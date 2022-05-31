@@ -5,8 +5,17 @@
     :to="'/post/' + post.slug"
     elevation="4"
   >
-    <v-img class="pa-1" :src="post.image" :alt="post.title" width="100%" aspect-ratio="1.2" contain/>
-    <v-card-title class="text-center text-h6 lighten-2">{{ post.title }}</v-card-title>
+    <v-img
+      class="pa-1"
+      :src="post.image"
+      :alt="post.title"
+      width="100%"
+      aspect-ratio="1.2"
+      contain
+    />
+    <v-card-title class="text-center text-h6 lighten-2">{{
+      post.title
+    }}</v-card-title>
     <v-divider class="mx-2"></v-divider>
     <v-card-text class="text-justify text-body-2">
       {{ post.resume }}

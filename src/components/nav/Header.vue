@@ -79,6 +79,10 @@ const navItems: NavItems = {
       title: 'Ministérios',
       to: '/ministerios',
     },
+    {
+      title: 'Bíblia',
+      to: '/biblia',
+    },
   ],
 }
 

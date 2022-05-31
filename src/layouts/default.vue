@@ -14,6 +14,7 @@
 <script lang="ts">
 import HeaderNav from '@/components/nav/Header.vue'
 import FooterNav from '@/components/nav/Footer.vue'
+
 export default {
   name: 'DefaultLayout',
   components: {

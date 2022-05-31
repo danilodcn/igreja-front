@@ -39,6 +39,7 @@
       <v-spacer class="my-4" />
 
       <div class="content" v-html="post.content" />
+      <div ref="main"></div>
       <v-spacer class="my-4" />
     </v-col>
   </v-container>

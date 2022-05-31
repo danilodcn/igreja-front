@@ -18,12 +18,16 @@ export class APIBase {
 
   constructor(config: AxiosRequestConfig = {}) {
     const apiConfig: AxiosRequestConfig = {
-      ...config,
       ...base,
+      ...config,
     }
     this.client = axios.create(apiConfig)
     this.baseUrl = config.baseURL
     this.user = { email: '' }
+  }
+
+  urlJoin(url: string) {
+    return `${this.baseUrl}/${url}`
   }
 
   async request(config: AxiosRequestConfig, auth: boolean = false) {

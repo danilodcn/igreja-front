@@ -7,9 +7,7 @@
           <p class="text-body-1">{{ title }}</p>
           <p class="text-h6 center">
             {{ subtitle }}
-            <info-dialog
-              :text="description"
-              :title="subtitle"
+            <info-dialog :text="description" :title="subtitle"
               ><v-icon size="20">mdi-information</v-icon></info-dialog
             >
           </p>
@@ -29,11 +27,11 @@ import InfoDialog from './InfoDialog.vue'
   components: { 'info-dialog': InfoDialog },
 })
 export default class ChurchBodyCard extends Vue {
-  @Prop({required: true}) src!: string
-  @Prop({required: true}) title!: string
-  @Prop({required: true}) subtitle!: string
-  @Prop({required: true}) description!: string
-  @Prop({required: true}) content!: string
+  @Prop({ required: true }) src!: string
+  @Prop({ required: true }) title!: string
+  @Prop({ required: true }) subtitle!: string
+  @Prop({ required: true }) description!: string
+  @Prop({ required: true }) content!: string
 
   @Prop({ required: true }) side!: String
 }
