@@ -66,7 +66,7 @@
               <v-btn
                 color="primary"
                 text
-                rounded
+                icon
                 large
                 :disabled="chapterNumber <= 1"
                 @click="handleBntClick(-1)"
@@ -81,7 +81,7 @@
               <v-btn
                 color="primary"
                 text
-                rounded
+                icon
                 large
                 :disabled="chapterNumber >= selectedBook.chapters"
                 @click="handleBntClick(+1)"
