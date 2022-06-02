@@ -27,12 +27,12 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-import { State } from "vuex-class";
-import { IRootState, IDialog } from "@/store/types";
+import { Component, Vue } from 'vue-property-decorator'
+import { State } from 'vuex-class'
+import { IRootState, IDialog } from '@/store/types'
 
 @Component({})
 export default class MainDialog extends Vue {
-  @State((state: IRootState) => state.dialog) dialog!: IDialog;
+  @State((state: IRootState) => state.dialog) dialog!: IDialog
 }
 </script>
