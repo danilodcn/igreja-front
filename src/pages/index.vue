@@ -5,28 +5,32 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import { Vue, Component } from 'nuxt-property-decorator'
+import { Mutation } from 'vuex-class'
 import PageCard from '@/components/PageCard.vue'
 import { HomePageService } from '@/services/homePageService'
 import { IPage } from '@/types/pages'
+import { MutationTypes, ToggleLoading } from '@/store'
 
 const homePageService = new HomePageService()
 
-export default Vue.extend({
+@Component({
   name: 'HomePage',
   components: { PageCard },
-  data() {
-    return {
-      pageInfo: {} as IPage,
-    }
-  },
-  created() {
-    this.getHomePageInfo()
-  },
-  methods: {
-    async getHomePageInfo() {
-      this.pageInfo = await homePageService.getHomePageInfo({ type: 1 }) // 1 is index pages
-    },
-  },
 })
+export default class IndexPage extends Vue {
+  pageInfo = {} as IPage
+
+  @Mutation(MutationTypes.TOGGLE_LOADING) toggleLoading: ToggleLoading
+
+  async created() {
+    await this.getHomePageInfo()
+  }
+
+  async getHomePageInfo() {
+    this.toggleLoading(true)
+    this.pageInfo = await homePageService.getHomePageInfo({ type: 1 }) // 1 is index pages
+    this.toggleLoading(false)
+  }
+}
 </script>
