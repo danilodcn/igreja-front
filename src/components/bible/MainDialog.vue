@@ -54,11 +54,8 @@
 import { Vue, Component, Watch } from 'vue-property-decorator'
 import { State, namespace } from 'vuex-class'
 import BookList from './BookList.vue'
-import {
-  IBibleState,
-  BibleActionsTypes,
-  BibleGettersTypes,
-} from '@/store/bible'
+import { BibleActionsTypes, BibleGettersTypes } from '@/store/bible'
+import { IBibleState } from '@/store/types'
 
 const bibleState = namespace('bible')
 

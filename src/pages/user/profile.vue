@@ -71,8 +71,6 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { IRootState } from '@/store'
-import { ILoggedUser } from '@/types/user'
 
 const form = {
   fileRules: [
@@ -86,17 +84,8 @@ export default Vue.extend({
   data() {
     return {
       form,
+      user: null,
     }
-  },
-  computed: {
-    user() {
-      const user: ILoggedUser = (this.$store?.state as IRootState).user
-      if (user.id) {
-        return user
-      } else {
-        return null
-      }
-    },
   },
 })
 </script>

@@ -1,20 +1,28 @@
 import { GetterTree, ActionTree, MutationTree } from 'vuex'
-import { ILoggedUser } from '@/types/user'
+import { IDialog, IRootState } from './types'
+import { state as bibleState } from './bible'
+import { state as userState } from './user'
 
-export const state = () => ({
-  user: {} as ILoggedUser,
+export const state = (): IRootState => ({
+  user: userState(),
+  bible: bibleState(),
+  loading: false,
+  dialog: {
+    msg: '',
+    active: false,
+    title: '',
+    bntClose: false,
+    persistent: false,
+  },
 })
 
-export type IRootState = ReturnType<typeof state>
+export enum MutationTypes {
+  TOGGLE_DIALOG = 'TOGGLE_DIALOG',
+  TOGGLE_LOADING = 'TOGGLE_LOADING',
+}
 
 export const getters: GetterTree<IRootState, IRootState> = {
   user: (state) => state.user,
-}
-
-export enum MutationTypes {
-  ACCESS_TOKEN = 'ACCESS_TOKEN',
-  LOGIN_USER = 'LOGIN_USER',
-  INICIALIZE_STATE = 'INICIALIZE_STATE',
 }
 
 export const actions: ActionTree<IRootState, IRootState> = {
@@ -24,16 +32,20 @@ export const actions: ActionTree<IRootState, IRootState> = {
   },
 }
 
-export const mutations: MutationTree<IRootState> = {
-  [MutationTypes.ACCESS_TOKEN]: (state, token: string) => {
-    localStorage.setItem(MutationTypes.ACCESS_TOKEN, token)
-    state.user.token = token
-  },
-  [MutationTypes.LOGIN_USER]: (state, user: ILoggedUser) => {
-    localStorage.setItem(MutationTypes.LOGIN_USER, JSON.stringify(user))
+export type ToggleLoading = (payload: boolean) => void
+export type ToggleDialog = (payload: IDialog) => void
 
-    state.user = user
+export const mutations: MutationTree<IRootState> = {
+  [MutationTypes.TOGGLE_DIALOG](state, payload: IDialog) {
+    state.dialog = {
+      ...state.dialog,
+      ...payload,
+    }
+  },
+
+  [MutationTypes.TOGGLE_LOADING](state, payload: boolean) {
+    state.loading = payload
   },
 }
 
-export const strict = false
+export const strict = true

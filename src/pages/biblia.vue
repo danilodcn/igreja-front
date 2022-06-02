@@ -60,6 +60,7 @@
               ></v-select>
             </div>
           </v-col>
+          <v-btn @click="toggleLoading(true)">D</v-btn>
 
           <v-card v-if="chapter">
             <v-card-subtitle class="subtitle">
@@ -138,15 +139,15 @@
 
 <script lang="ts">
 import { Vue, Component, Watch } from 'nuxt-property-decorator'
-import { State, namespace } from 'vuex-class'
+import { State, Mutation } from 'vuex-class'
 import BookList from '@/components/bible/BookList.vue'
-import { IBibleState, BibleActionsTypes } from '@/store/bible'
-import { IBook, IChapter, IVerse, IVersion } from '@/types/bible'
 import { versionsDescriptionHelper } from '@/helpers/bible-versions'
+import { IBook, IChapter, IVerse, IVersion } from '@/types/bible'
+import { IBibleState } from '@/store/types'
+// import { BibleActionsTypes } from '@/store/bible'
+import { MutationTypes, ToggleLoading } from '@/store'
 
 import bibleService from '~/services/bibleService'
-
-const bibleState = namespace('bible')
 
 @Component({
   name: 'BibleIndexPage',
@@ -155,9 +156,7 @@ const bibleState = namespace('bible')
 export default class extends Vue {
   @State bible!: IBibleState
 
-  @bibleState.Action(BibleActionsTypes.TOGGLE_DIALOG) closeBible!: Function
-  @bibleState.Action(BibleActionsTypes.GET_USER) getUser!: Function
-  @bibleState.Action(BibleActionsTypes.GET_BOOK) getBooks!: Function
+  @Mutation(MutationTypes.TOGGLE_LOADING) toggleLoading: ToggleLoading
 
   @Watch('bookName')
   onBookNameChange() {
@@ -246,7 +245,9 @@ export default class extends Vue {
   }
 
   async getChapter(version: string, abbrev: string, chapter: number) {
+    this.toggleLoading(true)
     this.chapter = await bibleService.getChapter(version, abbrev, chapter)
+    this.toggleLoading(false)
   }
 
   generateRange(n: number) {
@@ -254,9 +255,11 @@ export default class extends Vue {
     return array.map((item) => item + 1)
   }
 
-  created() {
-    this.getVersions()
-    this.getBook()
+  async created() {
+    this.toggleLoading(true)
+    await this.getVersions()
+    await this.getBook()
+    this.toggleLoading(false)
   }
 }
 </script>

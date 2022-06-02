@@ -32,7 +32,7 @@
       </template>
 
       <v-list>
-        <UserLogo :user="getUser" />
+        <UserLogo :user="{}" />
         <v-spacer />
 
         <v-col class="hidden-md-and-up">
@@ -49,10 +49,8 @@
 <script lang="ts">
 import Vue from 'vue'
 import UserLogo from '@/components/shared/UserLogo.vue'
-import { IRootState } from '@/store'
 import { IChurch } from '~/types/pages'
 import { HomePageService } from '@/services/homePageService'
-import { ILoggedUser } from '@/types/user'
 
 interface NavItem {
   title: string
@@ -99,14 +97,6 @@ export default Vue.extend({
     churchSelected: {} as IChurch,
   }),
   computed: {
-    getUser() {
-      const user: ILoggedUser = (this.$store?.state as IRootState).user
-      if (user.id) {
-        return user
-      } else {
-        return null
-      }
-    },
     defaultChurchName() {
       if (this.churchSelected !== ({} as IChurch) && this.churchSelected.name) {
         return this.churchSelected.name

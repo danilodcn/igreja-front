@@ -1,5 +1,6 @@
 <template>
   <v-app light class="app">
+    <main-loading />
     <v-main>
       <v-container fluid class="main">
         <header-nav />
@@ -14,12 +15,14 @@
 <script lang="ts">
 import HeaderNav from '@/components/nav/Header.vue'
 import FooterNav from '@/components/nav/Footer.vue'
+import MainLoading from '@/components/main/Loading.vue'
 
 export default {
   name: 'DefaultLayout',
   components: {
-    HeaderNav,
     FooterNav,
+    HeaderNav,
+    MainLoading,
   },
   data() {
     return {

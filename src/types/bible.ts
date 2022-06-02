@@ -22,7 +22,7 @@ export interface IBible {
   verses?: string[]
 }
 
-export interface IDialog {
+export interface IBibleDialog {
   active: boolean
   text: string
   title: string

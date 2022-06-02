@@ -1,11 +1,7 @@
 import { MutationTree, ActionTree, GetterTree } from 'vuex'
-import { IBible, IBook, IDialog } from '@/types/bible'
+import { IBibleState } from './types'
+import { IBook, IBibleDialog } from '@/types/bible'
 import bibleService from '@/services/bibleService'
-
-export interface IBibleState {
-  dialog: IDialog
-  bible: IBible
-}
 
 enum BibleStateBase {
   CHANGE_DIALOG = 'CHANGE_DIALOG',
@@ -37,7 +33,7 @@ export const state = (): IBibleState => ({
 })
 
 export const mutations: MutationTree<IBibleState> = {
-  [BibleMutationTypes.CHANGE_DIALOG]({ dialog }, payload: IDialog) {
+  [BibleMutationTypes.CHANGE_DIALOG]({ dialog }, payload: IBibleDialog) {
     dialog.title = payload.title || ''
     dialog.text = payload.text || ''
   },

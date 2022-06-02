@@ -59,10 +59,11 @@
 </template>
 <script lang="ts">
 import Vue from 'vue'
-import { ILoggedUser, ILoggingUser } from '@/types/user'
+import { ILoggingUser } from '@/types/user'
 import { alertDefault } from '@/types/utils'
-import { IRootState, MutationTypes } from '@/store'
-import { UserService } from '@/services/user'
+import { IRootState } from '@/store/types'
+// import { UserService } from '@/services/user'
+
 interface IFormData {
   loading: boolean
   passwordVisibility: boolean
@@ -76,11 +77,11 @@ const form: IFormData = {
   passwordVisibility: false,
   user: {
     email: 'daconnas.dcn@gmail.com',
-    password: 'Senha@123',
+    password: '1234',
   },
 }
 
-const userService = new UserService()
+// const userService = new UserService()
 
 export default Vue.extend({
   name: 'LoginPage',
@@ -105,27 +106,7 @@ export default Vue.extend({
     },
   },
   methods: {
-    async handleLogin() {
-      this.form.loading = true
-      let user = {} as ILoggedUser
-      try {
-        await userService.getUser(this.form.user)
-        user = userService.user
-      } catch {
-        user = undefined
-      }
-      if (user) {
-        this.$store.commit(MutationTypes.LOGIN_USER, user)
-        this.$router.push('/')
-      } else
-        this.alert = {
-          active: true,
-          message: 'Erro ao fazer login',
-          type: 'warning',
-        }
-
-      setInterval(() => (this.form.loading = false), 500)
-    },
+    async handleLogin() {},
   },
 })
 </script>
