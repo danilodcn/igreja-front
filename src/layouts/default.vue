@@ -1,6 +1,7 @@
 <template>
   <v-app light class="app">
     <main-loading />
+    <main-dialog />
     <v-main>
       <v-container fluid class="main">
         <header-nav />
@@ -16,6 +17,7 @@
 import HeaderNav from '@/components/nav/Header.vue'
 import FooterNav from '@/components/nav/Footer.vue'
 import MainLoading from '@/components/main/Loading.vue'
+import MainDialog from '@/components/main/Dialog.vue'
 
 export default {
   name: 'DefaultLayout',
@@ -23,6 +25,7 @@ export default {
     FooterNav,
     HeaderNav,
     MainLoading,
+    MainDialog,
   },
   data() {
     return {
