@@ -60,7 +60,6 @@
               ></v-select>
             </div>
           </v-col>
-          <v-btn @click="toggleLoading(true)">D</v-btn>
 
           <v-card v-if="chapter">
             <v-card-subtitle class="subtitle">
