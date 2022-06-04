@@ -18,9 +18,23 @@ export interface IDialog {
   persistent: boolean
 }
 
+export interface IAlert {
+  type: string
+  active: boolean
+  title?: string
+  text: string
+  dismissible?: boolean
+  outlined?: boolean
+  dense?: boolean
+  btnClose?: boolean
+  border?: string
+  icon?: string
+}
+
 export interface IRootState {
   bible: IBibleState
   user: IUserState
   loading: boolean
   dialog: IDialog
+  alert: IAlert
 }

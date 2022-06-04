@@ -1,13 +1,16 @@
 <template>
   <v-app light class="app">
-    <main-loading />
-    <main-dialog />
     <v-main>
-      <v-container fluid class="main">
-        <header-nav />
-        <Nuxt />
-        <div class="space" />
-        <footer-nav />
+      <v-container class="mt-0 pt-0 mb-4">
+        <v-container fluid class="main">
+          <header-nav />
+          <main-loading />
+          <main-dialog />
+          <main-alert />
+          <Nuxt />
+          <div class="space" />
+          <footer-nav />
+        </v-container>
       </v-container>
     </v-main>
   </v-app>
@@ -18,6 +21,7 @@ import HeaderNav from '@/components/nav/Header.vue'
 import FooterNav from '@/components/nav/Footer.vue'
 import MainLoading from '@/components/main/Loading.vue'
 import MainDialog from '@/components/main/Dialog.vue'
+import MainAlert from '@/components/main/Alert.vue'
 
 export default {
   name: 'DefaultLayout',
@@ -26,6 +30,7 @@ export default {
     HeaderNav,
     MainLoading,
     MainDialog,
+    MainAlert,
   },
   data() {
     return {
@@ -70,5 +75,6 @@ export default {
   width: 100%;
   margin: auto;
   padding: auto;
+  min-height: 2rem;
 }
 </style>
