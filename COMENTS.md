@@ -37,7 +37,7 @@ gpg --armor --export 54C6C13DE2CD88B3
 
 A saída do comando é a chave pública.
 
-#### Configurando o git
+### Configurando o git
 
 Em um repositório local usa-se o comando:
 ```
@@ -49,3 +49,6 @@ Em seguida faz-se uma configuração global para uso da chave criada anteriormen
 ```
 git config --global commit.signingkey 54C6C13DE2CD88B3
 ```
+
+### Configurando inserção de senha automaticamente
+
