@@ -66,3 +66,5 @@ gpgconf --reload gpg-agent
 ### Configurando containers remotos
 
 Inicialmente instale as dependências: ``gpg gnupg gpg-agent socat``.
+
+
