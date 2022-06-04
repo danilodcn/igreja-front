@@ -1,0 +1,12 @@
+version: '3.4'
+
+services:
+  app:
+    image: igreja-front
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    volumes: 
+      - ".:/app"
+      - "$HOME/.gnupg/:/root/.gnupg/"
+      - "$HOME/.gnupg/:/vscode/.gnupg/"
