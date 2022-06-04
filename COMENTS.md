@@ -62,3 +62,6 @@ Logo depois é necessário realizar o reload do agent do gpg. Para isso use o co
 ```
 gpgconf --reload gpg-agent
 ```
+
+### Configurando containers remotos
+
