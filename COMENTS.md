@@ -52,3 +52,13 @@ git config --global commit.signingkey 54C6C13DE2CD88B3
 
 ### Configurando inserção de senha automaticamente
 
+insira no arquivo ``~/.gnupg/gpg-agent.conf`` o seguinte conteúdo:
+```
+default-cache-ttl 3600
+```
+
+Logo depois é necessário realizar o reload do agent do gpg. Para isso use o comando:
+
+```
+gpgconf --reload gpg-agent
+```
