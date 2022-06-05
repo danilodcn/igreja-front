@@ -6,7 +6,7 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
-    volumes: 
-      - ".:/app"
-      - "$HOME/.gnupg/:/root/.gnupg/"
-      - "$HOME/.gnupg/:/vscode/.gnupg/"
+    volumes:
+      - '.:/app'
+      - '$HOME/.gnupg/:/root/.gnupg/'
+      - '$HOME/.gnupg/:/vscode/.gnupg/'

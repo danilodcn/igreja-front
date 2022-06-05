@@ -8,19 +8,22 @@ git config --global --add safe.directory /workspaces/igreja-front
 
 Ao rodar o comando acima, tudo funcionou!
 
-
 ## Assinando os commits
 
 Inicialmente deve-se criar as chaves usando o comando:
+
 ```
 gpg --full-generate-key
 ```
 
 Em seguida é necessário colocar a chave nas plataformas onde se quer assinar os commits (Github, Gitlab). Para lista as chaves usa-se o comando:
+
 ```
 gpg --list-secret-keys --keyid-format=long
 ```
-O resultado desse comando pode ser visto  abaixo. 
+
+O resultado desse comando pode ser visto abaixo.
+
 ```
 /home/danilodcn/.gnupg/pubring.kbx
 ----------------------------------
@@ -31,6 +34,7 @@ ssb   rsa4096/54C6C13DE2CD88B3 2022-06-04 [E] [expires: 2022-08-03]
 ```
 
 Para gerar a chave usa-se o comando:
+
 ```
 gpg --armor --export 54C6C13DE2CD88B3
 ```
@@ -40,6 +44,7 @@ A saída do comando é a chave pública.
 ### Configurando o git
 
 Em um repositório local usa-se o comando:
+
 ```
 git config --local commit.gpgSign true
 ```
@@ -52,7 +57,8 @@ git config --global commit.signingkey 54C6C13DE2CD88B3
 
 ### Configurando inserção de senha automaticamente
 
-insira no arquivo ``~/.gnupg/gpg-agent.conf`` o seguinte conteúdo:
+insira no arquivo `~/.gnupg/gpg-agent.conf` o seguinte conteúdo:
+
 ```
 default-cache-ttl 3600
 ```
@@ -65,4 +71,4 @@ gpgconf --reload gpg-agent
 
 ### Configurando containers remotos
 
-Inicialmente instale as dependências: ``gpg gnupg gpg-agent socat``.
+Inicialmente instale as dependências: `gpg gnupg gpg-agent socat`.
