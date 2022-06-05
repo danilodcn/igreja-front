@@ -6,7 +6,7 @@
           <header-nav />
           <main-loading />
           <main-dialog />
-          <main-alert />
+          <main-alert style="display: none;"/>
           <Nuxt />
           <div class="space" />
           <footer-nav />
@@ -17,13 +17,15 @@
 </template>
 
 <script lang="ts">
+import { Vue, Component } from 'nuxt-property-decorator'
+
 import HeaderNav from '@/components/nav/Header.vue'
 import FooterNav from '@/components/nav/Footer.vue'
 import MainLoading from '@/components/main/Loading.vue'
 import MainDialog from '@/components/main/Dialog.vue'
 import MainAlert from '@/components/main/Alert.vue'
 
-export default {
+@Component({
   name: 'DefaultLayout',
   components: {
     FooterNav,
@@ -32,8 +34,11 @@ export default {
     MainDialog,
     MainAlert,
   },
-}
+})
+export default class IndexLayout extends Vue {}
 </script>
+
+<style></style>
 
 <style scoped>
 .main {
