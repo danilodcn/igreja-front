@@ -6,7 +6,7 @@
           <header-nav />
           <main-loading />
           <main-dialog />
-          <main-alert style="display: none;"/>
+          <main-alert style="display: none" />
           <Nuxt />
           <div class="space" />
           <footer-nav />
