@@ -95,8 +95,8 @@ export default class EventsIndex extends Vue {
   }
 
   handleKeyUp(e: KeyboardEvent) {
-    if (e.key.toLowerCase() == 'enter') {
-      console.log('vai')
+    if (e.key.toLowerCase() === 'enter') {
+      return 0
     }
   }
 

@@ -44,14 +44,13 @@
       <v-card-actions>
         <v-btn color="primary" @click="getUser()">Click</v-btn>
         <v-btn color="primary" @click="getBooks()">Books</v-btn>
-        <v-btn color="primary" @click="log()">Add</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
 </template>
 
 <script lang="ts">
-import { Vue, Component, Watch } from 'vue-property-decorator'
+import { Vue, Component } from 'vue-property-decorator'
 import { State, namespace } from 'vuex-class'
 import BookList from './BookList.vue'
 import { BibleActionsTypes, BibleGettersTypes } from '@/store/bible'
@@ -76,15 +75,6 @@ export default class InfoDialog extends Vue {
   @bibleState.Action(BibleActionsTypes.GET_BOOK) getBooks!: Function
 
   @bibleState.Getter(BibleGettersTypes.GET_ALL_BOOKS) books!: string[]
-
-  @Watch('bible')
-  onRouterChange(val: string[]) {
-    console.log(val)
-  }
-
-  log() {
-    console.log('aqui')
-  }
 
   created() {}
 }

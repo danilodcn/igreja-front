@@ -57,8 +57,7 @@ export const actions: ActionTree<IBibleState, IBibleState> = {
   },
 
   [BibleActionsTypes.GET_USER]() {
-    const res = bibleService.getUser()
-    console.log(res)
+    bibleService.getUser()
   },
 
   [BibleActionsTypes.GET_BOOK]: async ({ commit }, payload: string) => {

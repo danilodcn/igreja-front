@@ -143,7 +143,6 @@ import BookList from '@/components/bible/BookList.vue'
 import { versionsDescriptionHelper } from '@/helpers/bible-versions'
 import { IBook, IChapter, IVerse, IVersion } from '@/types/bible'
 import { IBibleState } from '@/store/types'
-// import { BibleActionsTypes } from '@/store/bible'
 import { MutationTypes, ToggleLoading } from '@/store'
 
 import bibleService from '~/services/bibleService'
@@ -192,8 +191,11 @@ export default class extends Vue {
   chapter = null as IChapter
 
   get bookNames() {
-    const books = this.books?.map((book) => book.name)
-    return books
+    if (this.books) {
+      const books = this.books?.map((book) => book.name)
+      return books
+    }
+    return undefined
   }
 
   get selectedBook() {

@@ -3,7 +3,7 @@
     <v-alert v-model="alert.active" :type="alert.type" dismissible>{{
       alert.message
     }}</v-alert>
-    <v-col sm="9" md="6" class="pa-10 mx-auto">
+    <v-col sm="9" md="6" class="px-10 mx-auto py-5">
       <v-row align-content="center" align="center" class="center">
         <v-text-field
           v-model="search"

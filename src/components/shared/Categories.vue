@@ -18,6 +18,7 @@
             sm="6"
             md="4"
             lg="12"
+            class="py-2"
           >
             <v-divider v-if="!category" :key="`divider-${i}`"></v-divider>
             <v-list-item
