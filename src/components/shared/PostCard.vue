@@ -1,10 +1,5 @@
 <template>
-  <v-card
-    outlined
-    class="post-content"
-    :to="'/post/' + post.slug"
-    elevation="4"
-  >
+  <v-card v-bind="getProps()" outlined class="post-content" elevation="4">
     <v-img
       class="pa-1"
       :src="post.image"
@@ -66,6 +61,9 @@ export default Vue.extend({
 
       const _minutes = minutes > 10 ? minutes : `0${minutes}`
       return `${day} de ${month} de ${year} às ${hour}:${_minutes}`
+    },
+    getProps() {
+      return this.$attrs
     },
   },
 })
