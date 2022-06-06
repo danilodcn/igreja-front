@@ -9,8 +9,8 @@ export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   srcDir: 'src/',
   head: {
-    titleTemplate: '%s - igreja-front',
-    title: 'igreja-front',
+    titleTemplate: '%s - IBM',
+    title: 'IBM',
     htmlAttrs: {
       lang: 'en',
     },
@@ -73,7 +73,8 @@ export default {
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
-    customVariables: ['assets/css/variables.scss'],
+    // customVariables: ['assets/css/variables.scss'],
+    // treeShake: true,
     theme: {
       dark: false,
       themes: {
@@ -87,8 +88,9 @@ export default {
           success: colors.green.accent3,
         },
         light: {
-          primary: '#34993F',
-          text_normal: '#6C757D',
+          primary: '#267037',
+          secondary: '#D49494',
+          background: '#e8e8e8',
           accent: colors.grey.darken3,
           secondary: colors.amber.darken3,
           info: colors.teal.lighten1,
