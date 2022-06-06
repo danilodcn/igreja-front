@@ -1,66 +1,18 @@
 <template>
-  <v-container fluid>
-    <v-col sm="9" md="6" class="px-0 px-sm-10 mx-auto py-16">
-      <field-search
-        v-model="search"
-        placeholder="Buscar Evento"
-        append-icon="mdi-magnify"
-        @keyup.stop.native="handleKeyUp"
-      >
-        <v-btn color="primary" text align-content="center" class="mx-auto">
-          Pesquisar
-        </v-btn>
-      </field-search>
-    </v-col>
-
-    <v-row>
-      <v-col cols="12" sm="12" md="12" lg="3">
-        <categories
-          v-model="selectedCategories"
-          :categories="categories"
-        ></categories>
-      </v-col>
-
-      <v-col>
-        <v-card>
-          <v-row>
-            <v-col
-              v-for="(post, index) in content"
-              :key="`post.slug-${index}`"
-              cols="12"
-              sm="6"
-              md="4"
-              lg="4"
-            >
-              <post-card :post="post" />
-            </v-col>
-          </v-row>
-        </v-card>
-      </v-col>
-    </v-row>
-
-    <v-container class="my-10">
-      <v-row class="my-auto" justify="center">
-        <span class="my-auto">{{ textInPagination }}</span>
-        <v-pagination
-          v-model="pages.current"
-          class="my-4"
-          circle
-          :length="pages.maxPage"
-          :total-visible="7"
-          >Minha</v-pagination
-        >
-      </v-row>
-    </v-container>
-  </v-container>
+  <div>
+    <content-component
+      v-model="selectedCategories"
+      :categories="categories"
+      :content="content"
+      base-url="eventos"
+    />
+  </div>
 </template>
 
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
-import Categories from '../../components/shared/Categories.vue'
-import PostCard from '@/components/shared/PostCard.vue'
-import FieldSearch from '@/components/shared/FieldSearch.vue'
-import { IContent, ICategory, IPaginationInfo } from '@/types/content'
+import ContentComponent from '@/components/Content.vue'
+import { IContent, ICategory } from '@/types/content'
 
 const post: IContent = {
   category: {} as ICategory,
@@ -73,25 +25,17 @@ const post: IContent = {
   subtitle: 'Meu subtítulo',
 }
 
-const pages: IPaginationInfo = {
-  current: 1,
-  pageSize: 6,
-  maxPage: 50,
-  count: 45,
-}
-
 @Component({
   name: 'ContentPage',
   components: {
-    PostCard,
-    FieldSearch,
-    Categories,
+    ContentComponent,
   },
   head: {
     title: 'Eventos',
   },
 })
 export default class EventsIndex extends Vue {
+  baseUrl = 'eventos'
   content: IContent[] = [post, post, post, post, post, post]
   categories: ICategory[] = [
     { active: true, id: 2, name: 'Palavra do apóstolo', order: 3 },
@@ -100,27 +44,7 @@ export default class EventsIndex extends Vue {
     { active: true, id: 8, name: 'sha', order: 2 },
   ]
 
-  pages: IPaginationInfo = pages
   search = null
   selectedCategories: ICategory[] = []
-
-  get textInPagination() {
-    const plural = this.pages.maxPage > 1 ? 's' : ''
-    const text = `${this.pages.current} de ${this.pages.maxPage} página${plural}`
-    return text
-  }
-
-  handleKeyUp(e: KeyboardEvent) {
-    if (e.key.toLowerCase() == 'enter') {
-      console.log('vai')
-    }
-  }
-
-  created() {
-    const currentPage = this.$route.query.page?.toString()
-    if (currentPage) {
-      this.pages.current = Number(currentPage)
-    }
-  }
 }
 </script>

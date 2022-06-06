@@ -36,5 +36,4 @@ export interface IPaginationInfo {
   current: number
   maxPage: number
   pageSize: number
-  count: number
 }
