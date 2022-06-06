@@ -10,29 +10,37 @@
 
     <v-list rounded border-radius="4px">
       <v-list-item-group v-model="selectedCategories" multiple>
-        <template v-for="(category, i) in categories">
-          <v-divider v-if="!category" :key="`divider-${i}`"></v-divider>
-
-          <v-list-item
-            v-else
-            :key="`item-${i}`"
-            :value="category"
-            active-class="primary lighten-2 white--text"
+        <v-row>
+          <v-col
+            v-for="(category, i) in categories"
+            :key="`col-${i}`"
+            cols="12"
+            sm="6"
+            md="4"
+            lg="12"
           >
-            <template #default="{ active }">
-              <v-list-item-action>
-                <v-checkbox :input-value="active" color="accent"></v-checkbox>
-              </v-list-item-action>
+            <v-divider v-if="!category" :key="`divider-${i}`"></v-divider>
+            <v-list-item
+              v-else
+              :key="`item-${i}`"
+              :value="category"
+              active-class="primary lighten-2 white--text"
+            >
+              <template #default="{ active }">
+                <v-list-item-action>
+                  <v-checkbox :input-value="active" color="accent"></v-checkbox>
+                </v-list-item-action>
 
-              <v-list-item-content>
-                <v-list-item-title
-                  class="secondary-text"
-                  v-text="category.name"
-                ></v-list-item-title>
-              </v-list-item-content>
-            </template>
-          </v-list-item>
-        </template>
+                <v-list-item-content>
+                  <v-list-item-title
+                    class="secondary-text"
+                    v-text="category.name"
+                  ></v-list-item-title>
+                </v-list-item-content>
+              </template>
+            </v-list-item>
+          </v-col>
+        </v-row>
       </v-list-item-group>
     </v-list>
   </v-card>
